@@ -2,8 +2,8 @@
 Library Book Loan System | BBM487 
 
 
-20926046	RIDVAN ALTUNEL 		Project Manager & Developer 
+20926046	RIDVAN ALTUNEL 		(Project Manager & Developer) 
 
-21228731 	MAHMUT TEKİNYER	  Analyst & Technical Writer 
+21228731 	MAHMUT TEKİNYER	  (Analyst & Technical Writer) 
 
-21327618 	AYŞE AKCAN			  Architecht & Tester 
+21327618 	AYŞE AKCAN			  (Architecht & Tester) 
