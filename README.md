@@ -1,9 +1,10 @@
 # bbm487s2017g14
 Library Book Loan System | BBM487 
 
+Team Members
 
-20926046	RIDVAN ALTUNEL 		(Project Manager & Developer) 
-
-21228731 	MAHMUT TEKİNYER	  (Analyst & Technical Writer) 
-
-21327618 	AYŞE AKCAN			  (Architecht & Tester) 
+| No            | Student         | Roles |
+| ------------- |---------------| -----|
+| 20926046      | Rıdvan Altunel  | Project Manager & Developer |
+| 21228731      | Mahmut Tekinyer |   Analyst & Technical Writer |
+| 21327618      | Ayşe Akcan      |   Architecht & Tester |
