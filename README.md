@@ -1,7 +1,7 @@
 # LBLS Desktop
 Library Book Loan System desktop application for BBM487 Software Engineering Lab course.
 
-## Project Team (Group17)
+## Project Team (Group14)
 
 | No            | Student         | Roles |
 | ------------- |---------------| -----|
