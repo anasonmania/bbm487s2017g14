@@ -4,7 +4,7 @@ Library Book Loan System desktop application for BBM487 Software Engineering Lab
 ## Project Team (Group14)
 
 | No            | Student         | Roles |
-| ------------- |---------------| -----|
+| ------------- |---------------| ------|
 | 20926046      | Rıdvan Altunel  | Project Manager & Developer |
 | 21228731      | Mahmut Tekinyer |   Analyst & Technical Writer |
 | 21327618      | Ayşe Akcan      |   Architecht & Tester |
