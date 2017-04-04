@@ -1,0 +1,364 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+
+
+.root{
+	-fx-background-image: url("../../../../resources/images/bg.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 1366.0 768.0;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30.0, 0.5, 0.0, 0.0);
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url("../../../../resources/font/Roboto-Regular.ttf");
+}
+
+.logo-view{
+	-fx-background-image: url("../../../../resources/images/logo_sq.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center top;
+	-fx-background-repeat: no-repeat;
+}
+
+.logo-view-wide{
+	-fx-background-image: url("../../../../resources/images/logo_wide.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+}
+
+
+/************************************
+ * 									*
+ * 	Button Styles
+ * 									*
+ ***********************************/
+
+.button-grey{
+	-fx-background-color: #727986;
+	-fx-background-radius: 30.0;
+	-fx-text-fill: #ffffff;
+	-fx-pref-width: 480.0;
+	-fx-pref-height: 60.0;
+	-fx-font-size: 18.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+}
+
+
+
+.button-grey:hover{
+	-fx-background-color: #5d636e;
+	-fx-background-radius: 30.0;
+	-fx-text-fill: #ffffff;
+	-fx-pref-width: 480.0;
+	-fx-pref-height: 60.0;
+	-fx-font-size: 18.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+}
+
+.button-green{
+	-fx-background-color: #46b859;
+	-fx-background-radius: 30.0;
+	-fx-text-fill: #ffffff;
+	-fx-pref-width: 480.0;
+	-fx-pref-height: 60.0;
+	-fx-font-size: 18.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
+}
+
+.button-green:hover{
+	-fx-background-color: #3c9e4c;
+	-fx-background-radius: 30.0;
+	-fx-text-fill: #ffffff;
+	-fx-pref-width: 720.0;
+	-fx-pref-height: 60.0;
+	-fx-font-size: 18.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+}
+
+.button-back{
+	-fx-pref-width: 144;
+	-fx-pref-height: 48;
+	-fx-background-image: url("../../../../resources/images/icon_back.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 24;
+	-fx-border-color: #c1c3c9;
+	-fx-border-width: 2;
+	-fx-border-radius: 24;
+}
+
+.button-back:hover{
+	-fx-pref-width: 144;
+	-fx-pref-height: 48;
+	-fx-background-image: url("../../../../resources/images/icon_back.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 24;
+	-fx-border-color: #727986;
+	-fx-border-width: 2;
+	-fx-border-radius: 24;
+}
+
+.button-logout{
+	-fx-pref-width: 144;
+	-fx-pref-height: 48;
+	-fx-graphic: url("../../../../resources/images/icon_logout.png");
+	-fx-graphic-text-gap: 12;
+
+	-fx-text-fill: #727986;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 24;
+	-fx-border-color: #c1c3c9;
+	-fx-border-width: 2;
+	-fx-border-radius: 24;
+	-fx-opacity: 0.5;
+}
+
+.button-logout:hover{
+	-fx-pref-width: 144;
+	-fx-pref-height: 48;
+	-fx-graphic: url("../../../../resources/images/icon_logout.png");
+	-fx-graphic-text-gap: 12;
+
+	-fx-text-fill: #727986;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+
+	-fx-background-radius: 24;
+	-fx-border-color: #727986;
+	-fx-border-width: 2;
+	-fx-border-radius: 24;
+	-fx-opacity: 1;
+}
+
+.button-search{
+	-fx-pref-width: 96;
+	-fx-pref-height: 48;
+	-fx-graphic: url("../../../../resources/images/icon_search.png");
+	-fx-graphic-text-gap: 12;
+
+	-fx-text-fill: #727986;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 24;
+	-fx-border-color: #c1c3c9;
+	-fx-border-width: 2;
+	-fx-border-radius: 24;
+	-fx-opacity: 0.5;
+}
+
+.button-search:hover{
+	-fx-pref-width: 96;
+	-fx-pref-height: 48;
+	-fx-graphic: url("../../../../resources/images/icon_search.png");
+	-fx-graphic-text-gap: 12;
+
+	-fx-text-fill: #727986;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+
+	-fx-background-radius: 24;
+	-fx-border-color: #727986;
+	-fx-border-width: 2;
+	-fx-border-radius: 24;
+	-fx-opacity: 1;
+}
+
+.button-grid-1{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12.0;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("../../../../resources/images/icon_book.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #727986;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #e5e5e5;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+
+}
+
+.button-grid-1:hover{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("../../../../resources/images/icon_book_red.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #d41923;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #d41923;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+}
+
+
+
+/************************************
+ * 									*
+ * 	TextField
+ * 									*
+ ***********************************/
+
+.text-field {
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 6.0;
+	-fx-pref-width: 360.0;
+	-fx-pref-height: 36.0;
+	-fx-max-width: 360.0;
+	-fx-max-height: 36.0;
+	-fx-font-size: 18.0;
+	-fx-font-family: Roboto;
+}
+
+.password-field {
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 6.0;
+	-fx-pref-width: 360.0;
+	-fx-pref-height: 36.0;
+	-fx-max-width: 360.0;
+	-fx-max-height: 36.0;
+	-fx-font-size: 18.0;
+	-fx-font-family: Roboto;
+}
+
+
+.text-line{
+	-fx-background-color: #727986;
+	-fx-opacity: 0.4;
+	-fx-pref-width: 360.0;
+	-fx-pref-height: 1.0;
+	-fx-max-width: 360.0;
+	-fx-max-height: 1.0;
+	-fx-max-height: 1.0;
+
+}
+
+.text-line-active{
+	-fx-background-color: #727986;
+	-fx-opacity: 1.0;
+	-fx-pref-width: 360.0;
+	-fx-pref-height: 1.0;
+	-fx-max-height: 1.0;
+
+}
+
+.text-field-wide {
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 6.0;
+	-fx-pref-width: 480.0;
+	-fx-pref-height: 36.0;
+	-fx-max-width: 480.0;
+	-fx-max-height: 36.0;
+	-fx-font-size: 18.0;
+	-fx-font-family: Roboto;
+}
+
+.password-field-wide {
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 6.0;
+	-fx-pref-width: 480.0;
+	-fx-pref-height: 36.0;
+	-fx-max-width: 480.0;
+	-fx-max-height: 36.0;
+	-fx-font-size: 18.0;
+	-fx-font-family: Roboto;
+}
+
+.text-line-wide{
+	-fx-background-color: #727986;
+	-fx-opacity: 0.4;
+	-fx-pref-width: 480.0;
+	-fx-pref-height: 1.0;
+	-fx-max-height: 1.0;
+
+}
+
+.text-line-wide-active{
+	-fx-background-color: #727986;
+	-fx-opacity: 1.0;
+	-fx-pref-width: 480.0;
+	-fx-pref-height: 1.0;
+	-fx-max-height: 1.0;
+
+}
+
+
+/************************************
+ * 									*
+ * 	Icons
+ * 									*
+ ***********************************/
+
+.icon-create-user{
+	-fx-pref-width: 48.0;
+	-fx-pref-height: 48.0;
+	-fx-max-width: 48.0;
+	-fx-max-height: 48.0;
+	-fx-background-image: url("../../../../resources/images/icon_adduser.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+
+}
+
+
+
+/************************************
+ * 									*
+ * 	DatePicker ComboBox
+ * 									*
+ ***********************************/
+
+.date-picker{
+	-fx-background-color: transparent;
+	-fx-max-width: 360;
+	-fx-open-tab-animation: grow ;
+}
+
+.date-picker-popup{
+	-fx-background-color: transparent;
+	-fx-font-size: 18;
+	-fx-animated: true ;
+	-fx-open-tab-animation: grow ;
+}
+
+.date-picker .cell:hover{
+	-fx-background-color: red;
+}
+
+
+
+
