@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.TextInputControl?>
+
+<GridPane fx:id="paneMain" alignment="TOP_CENTER" hgap="20.0" maxHeight="768.0" maxWidth="1366.0" minHeight="384.0" minWidth="683.0" prefHeight="768.0" prefWidth="1366.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.Login">
+   <rowConstraints>
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" />
+      <RowConstraints minHeight="10.0" prefHeight="200.0" />
+      <RowConstraints minHeight="-Infinity" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="170.0" />
+      <RowConstraints prefHeight="60.0" />
+      <RowConstraints minHeight="10.0" prefHeight="20.0" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints minHeight="10.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+   </rowConstraints>
+   <columnConstraints>
+      <ColumnConstraints minWidth="10.0" prefWidth="460.0" />
+   </columnConstraints>
+   <children>
+      <GridPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="170.0" vgap="20.0" GridPane.rowIndex="3">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="lbUsername" styleClass="text-tfheader" text="USERNAME" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Label>
+
+
+            <TextField fx:id="tfUsername" alignment="TOP_LEFT" onKeyTyped="#lineUsername" styleClass="text-field-wide" translateY="-10.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </TextField>
+             <PasswordField fx:id="pfPassword" alignment="TOP_LEFT" onKeyTyped="#linePassword" styleClass="password-field-wide" translateY="-10.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <Rectangle fx:id="rUsername" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="460.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+            <Rectangle fx:id="rPassword" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="460.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <Label fx:id="lbPassword" styleClass="text-tfheader" text="PASSWORD" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="lbUserdata" opacity="0.0" styleClass="text-user" text="Rıdvan Altunel" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets top="8.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="lbWelcome" alignment="TOP_CENTER" contentDisplay="TOP" opacity="0.0" styleClass="text-welcome" text="Welcome to LBLS Desktop" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets top="32.0" />
+               </GridPane.margin>
+            </Label>
+         </children>
+      </GridPane>
+      <Button fx:id="login" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogin" styleClass="button-green" text="Login" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+      <Button fx:id="createAccount" mnemonicParsing="false" onAction="#handleCreateAccount" prefHeight="48.0" styleClass="button-grey" text="Create Account" GridPane.rowIndex="6" />
+      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="logo-view" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin></Pane>
+      <Label alignment="CENTER" styleClass="text-xsmall" text="© Group 14 , 2017" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.valignment="CENTER" />
+      <HBox fx:id="boxFailed" alignment="CENTER" opacity="0.0" prefHeight="0.0" prefWidth="460.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+         <children>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" styleClass="icon-failed" />
+            <Label styleClass="text-medium-red" text="LOGIN FAILED">
+               <HBox.margin>
+                  <Insets left="12.0" />
+               </HBox.margin></Label>
+         </children>
+         <GridPane.margin>
+            <Insets right="40.0" />
+         </GridPane.margin>
+      </HBox>
+
+
+
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <stylesheets>
+      <URL value="@styles/application.css" />
+      <URL value="@styles/fonts.css" />
+   </stylesheets>
+</GridPane>

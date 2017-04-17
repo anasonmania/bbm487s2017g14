@@ -20,12 +20,29 @@
 	-fx-font-smoothing-type: gray;
 }
 
+.text-xsmall-red{
+	-fx-font-family: Roboto;
+	-fx-font-size: 12.0;
+	-fx-text-fill: #d41923;
+	-fx-fill: #727986;
+	-fx-font-smoothing-type: gray;
+}
+
 .text-medium{
 	-fx-font-family: Roboto;
 	-fx-font-size: 16.0;
 	-fx-text-fill: #727986;
 	-fx-fill: #727986;
 	-fx-font-smoothing-type: gray;
+}
+
+.text-medium-red{
+	-fx-font-family: Roboto;
+	-fx-font-size: 13.0;
+	-fx-text-fill: #d41923;
+	-fx-fill: #727986;
+	-fx-font-smoothing-type: gray;
+	-fx-font-weight: BOLD;
 }
 
 .text-tfheader{
@@ -58,6 +75,21 @@
 	-fx-font-size: 18.0;
 	-fx-text-fill: #727986;
 	-fx-font-smoothing-type: gray;
+}
+
+.text-user{
+	-fx-font-family: Roboto;
+	-fx-font-size: 20.0;
+	-fx-text-fill: #727986;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-welcome{
+	-fx-font-family: Roboto;
+	-fx-font-size: 20.0;
+	-fx-text-fill: #46b859;
+	-fx-font-smoothing-type: gray;
+	-fx-font-weight: BOLD;
 }
 
 

@@ -1,0 +1,174 @@
+package application.controller;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import application.Main;
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+public class HomePageLibrarian implements Initializable {
+
+	public TextField tfSearch;
+	public GridPane lnSearch;
+	public Label lbName, lbSchoolidentity;
+	public Button btnGrid1, btnGrid2, btnGrid3, btnGrid4;
+	public GridPane paneButtons, paneSearch;
+
+
+	private FadeTransition showBtn1;
+	private FadeTransition hideBtn1;
+	private FadeTransition showBtn2;
+	private FadeTransition hideBtn2;
+	private FadeTransition showBtn3;
+	private FadeTransition hideBtn3;
+	private FadeTransition showBtn4;
+	private FadeTransition hideBtn4;
+	private FadeTransition showButtons;
+	private FadeTransition hideButtons;
+	private FadeTransition showSearch;
+	private FadeTransition hideSearch;
+
+	private Duration delayFactor = Duration.millis(200.0d);
+	private Duration opacityFactor = Duration.millis(500.0d);
+
+
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// TODO Auto-generated method stub
+		lnSearch.setStyle("-fx-opacity: 0.4");
+		tfSearch.setPromptText("Search books");
+		lbName.setText(Main.currentUser.getName() + " " + Main.currentUser.getSurname());
+		lbSchoolidentity.setText(Integer.toString(Main.currentUser.getSchoolNumber()));
+
+
+		setOpacityAnims();
+		showButtons.play();
+		showSearch.play();
+		/*btnGrid1.setOpacity(0);
+		btnGrid2.setOpacity(0);
+		btnGrid3.setOpacity(0);
+		btnGrid4.setOpacity(0);
+		showBtn1.play();
+		showBtn2.play();
+		showBtn3.play();
+		showBtn4.play();
+		btnGrid1.setOpacity(0.8);
+		btnGrid2.setOpacity(0.8);
+		btnGrid3.setOpacity(0.8);
+		btnGrid4.setOpacity(0.8);*/
+
+	}
+
+	public void logout(ActionEvent event) throws IOException{
+		Main.currentUser.logout();
+
+
+
+		Parent newParent = FXMLLoader.load(getClass().getResource("../view/Login.fxml"));
+		Scene newScreen = new Scene(newParent);
+		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		appStage.setScene(newScreen);
+
+		 Task<Void> sleeper = new Task<Void>() {
+	            @Override
+	            protected Void call() throws Exception {
+	                try {
+	                    Thread.sleep(1000);
+	                } catch (InterruptedException e) {
+	                }
+	                return null;
+	            }
+	        };
+	        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+	            @Override
+	            public void handle(WorkerStateEvent event) {
+	            	hideSearch.play();
+	        		hideButtons.play();
+	            }
+	        });
+	        new Thread(sleeper).start();
+	        
+
+    		appStage.show();
+
+	}
+
+	public void lineSearch() {
+		lnSearch.setStyle("-fx-opacity: 1.0;");
+	}
+
+	public void setOpacityAnims(){
+
+		/*showBtn1 = new FadeTransition(opacityFactor, btnGrid1);
+		showBtn1.setFromValue(0);
+		showBtn1.setToValue(0.8);
+
+		hideBtn1 = new FadeTransition(opacityFactor, btnGrid1);
+		hideBtn1.setFromValue(0.8);
+		hideBtn1.setToValue(0);
+
+		showBtn2 = new FadeTransition(opacityFactor, btnGrid2);
+		showBtn2.setFromValue(0);
+		showBtn2.setToValue(0.8);
+		showBtn2.setDelay(delayFactor);
+
+		hideBtn2 = new FadeTransition(opacityFactor, btnGrid2);
+		hideBtn2.setFromValue(0.8);
+		hideBtn2.setToValue(0);
+
+		showBtn3 = new FadeTransition(opacityFactor, btnGrid3);
+		showBtn3.setFromValue(0);
+		showBtn3.setToValue(0.8);
+		showBtn3.setDelay(delayFactor.multiply(2));
+
+		hideBtn3 = new FadeTransition(opacityFactor, btnGrid3);
+		hideBtn3.setFromValue(0.8);
+		hideBtn3.setToValue(0);
+
+		showBtn4 = new FadeTransition(opacityFactor, btnGrid4);
+		showBtn4.setFromValue(0);
+		showBtn4.setToValue(0.8);
+		showBtn4.setDelay(delayFactor.multiply(3));
+
+		hideBtn4 = new FadeTransition(opacityFactor, btnGrid4);
+		hideBtn4.setFromValue(0.8);
+		hideBtn4.setToValue(0);*/
+
+		showButtons = new FadeTransition(opacityFactor.multiply(2), paneButtons);
+		showButtons.setFromValue(0);
+		showButtons.setToValue(1);
+
+		showSearch = new FadeTransition(opacityFactor, paneSearch);
+		showSearch.setFromValue(0);
+		showSearch.setToValue(1);
+
+		hideButtons = new FadeTransition(opacityFactor.multiply(2), paneButtons);
+		hideButtons.setFromValue(1);
+		hideButtons.setToValue(0);
+
+		hideSearch = new FadeTransition(opacityFactor, paneSearch);
+		hideSearch.setFromValue(1);
+		hideSearch.setToValue(0);
+
+	}
+
+}

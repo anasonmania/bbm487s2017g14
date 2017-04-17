@@ -1,0 +1,302 @@
+package application.controller;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.ResourceBundle;
+
+import application.Main;
+import application.model.DbProperties;
+import javafx.animation.FadeTransition;
+import javafx.animation.FillTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+public class CreateAccount implements Initializable {
+
+	public TextField tfUsername;
+	public TextField tfSchoolNumber;
+	public TextField tfEmail;
+	public TextField tfName;
+	public TextField tfSurname;
+	public TextField tfPhoneNumber;
+	public PasswordField pfPassword;
+	public DatePicker dpBirthday;
+
+	public Label warnUsername, warnPassword, warnSchoolnumber, warnEmail;
+
+	public Rectangle rUsername, rPassword, rSchoolnumber, rEmail, rName, rSurname, rBirthdate, rPhonenumber;
+
+	public int failControl;
+	private Timeline tmDown;
+	private Timeline tmUp;
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		tfUsername.setPromptText("Username");
+		tfSchoolNumber.setPromptText("School Number");
+		tfEmail.setPromptText("E-mail");
+		tfName.setPromptText("Name");
+		tfSurname.setPromptText("Surname");
+		tfPhoneNumber.setPromptText("Phone Number");
+		pfPassword.setPromptText("Password");
+		dpBirthday.setPromptText("Date of birth");
+		failControl = 0;
+		tmDown = new Timeline();
+		textLinesDown();
+		tmUp = new Timeline();
+		textLinesUp();
+
+	}
+
+	public void createAccount(ActionEvent event) throws SQLException {
+
+		int iduserinfo, schoolnumber;
+		String username, password, email, name, surname, phonenumber;
+		LocalDate birthdate;
+
+		/* Generate id, compare with database table ids */
+		HashSet<Integer> ids = new HashSet<Integer>();
+		PreparedStatement idsQuery = Main.con.prepareStatement("SELECT iduserinfo FROM user ");
+		ResultSet result = idsQuery.executeQuery();
+		while (result.next()) {
+			ids.add(Integer.parseInt(result.getString(1)));
+		}
+		Random generator = new Random();
+		iduserinfo = generator.nextInt(99999999) + 1;
+		while (ids.contains(iduserinfo)) {
+			iduserinfo = generator.nextInt(99999999) + 1;
+		}
+
+		username = tfUsername.getText();
+		password = pfPassword.getText();
+		schoolnumber = Integer.parseInt(tfSchoolNumber.getText());
+		email = tfEmail.getText();
+		name = tfName.getText();
+		surname = tfSurname.getText();
+		phonenumber = tfPhoneNumber.getText();
+		birthdate = dpBirthday.getValue();
+
+		System.out.println(birthdate);
+		PreparedStatement statement = Main.con
+				.prepareStatement("INSERT INTO user (`iduserinfo`, `username`, `password`, `schoolnumber`, "
+						+ "`email`, `name`, `surname`, `birthdate`, `phonenumber`, `islibrarian`) "
+						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? )");
+
+		statement.setInt(1, iduserinfo);
+		statement.setString(2, username);
+		statement.setString(3, password);
+		statement.setInt(4, schoolnumber);
+		statement.setString(5, email);
+		statement.setString(6, name);
+		statement.setString(7, surname);
+		statement.setDate(8, null);
+		statement.setString(9, phonenumber);
+		statement.setInt(10, 0);
+		statement.execute();
+
+	}
+
+	public void handleAnimations(ActionEvent event) throws SQLException {
+
+		/* Prepare color animations */
+		FillTransition tranUsername = new FillTransition(Duration.millis(300.0d), rUsername, Color.valueOf("#727986"),
+				Color.valueOf("#d41923"));
+		FillTransition tranPassword = new FillTransition(Duration.millis(300.0d), rPassword, Color.valueOf("#727986"),
+				Color.valueOf("#d41923"));
+		FillTransition tranSchoolnumber = new FillTransition(Duration.millis(300.0d), rSchoolnumber,
+				Color.valueOf("#727986"), Color.valueOf("#d41923"));
+		FillTransition tranEmail = new FillTransition(Duration.millis(300.0d), rEmail, Color.valueOf("#727986"),
+				Color.valueOf("#d41923"));
+
+		/* Prepare warning text animations */
+		FadeTransition tranUsernameWarning = new FadeTransition(Duration.millis(300.0d), warnUsername);
+		tranUsernameWarning.setFromValue(0);
+		tranUsernameWarning.setToValue(1);
+
+		/* Check username */
+		HashSet<String> users = new HashSet<String>();
+		PreparedStatement usersQuery = Main.con.prepareStatement("SELECT username FROM user ");
+		ResultSet result = usersQuery.executeQuery();
+		while (result.next()) {
+			users.add(result.getString(1));
+		}
+
+		if (tfUsername.getText().equals("")) {
+			warnUsername.setText("Please enter a username");
+			tranUsername.play();
+			tranUsernameWarning.play();
+		} else {
+
+			if (users.contains(tfUsername.getText())) {
+				warnUsername.setText("This username is already taken");
+				tranUsername.play();
+				tranUsernameWarning.play();
+			}
+		}
+
+		/* Check password */
+		HashSet<Integer> schoolNums = new HashSet<Integer>();
+		PreparedStatement schoolNumsQuery = Main.con.prepareStatement("SELECT schoolnumber FROM user ");
+		result = schoolNumsQuery.executeQuery();
+		while (result.next()) {
+			schoolNums.add(Integer.parseInt(result.getString(1)));
+		}
+
+		for (Integer x : schoolNums)
+			System.out.println(x);
+
+
+
+		tmDown.play();
+
+	}
+
+	public void back(ActionEvent event) throws IOException {
+		Parent newParent = FXMLLoader.load(getClass().getResource("../view/Login.fxml"));
+		Scene newScreen = new Scene(newParent);
+		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		appStage.setScene(newScreen);
+		appStage.show();
+	}
+
+	public void lineUsername() {
+		rUsername.setOpacity(1);
+	}
+
+	public void linePassword() {
+		rPassword.setOpacity(1);
+	}
+
+	public void lineSchoolNumber() {
+		rSchoolnumber.setOpacity(1);
+	}
+
+	public void lineEmail() {
+		rEmail.setOpacity(1);
+	}
+
+	public void lineName() {
+		rName.setOpacity(1);
+	}
+
+	public void lineSurname() {
+		rSurname.setOpacity(1);
+
+	}
+
+	public void lineBirthday() {
+		rBirthdate.setOpacity(1);
+	}
+
+	public void linePhoneNumber() {
+		rPhonenumber.setOpacity(1);
+	}
+
+
+	public void textLinesDown(){
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(rUsername.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rUsername.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(tfUsername.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(tfUsername.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(rPassword.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rPassword.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(pfPassword.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(pfPassword.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO, new KeyValue(rSchoolnumber.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rSchoolnumber.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO, new KeyValue(tfSchoolNumber.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(tfSchoolNumber.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(rEmail.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rEmail.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(tfEmail.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(tfEmail.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(rName.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rName.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(tfName.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(tfName.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(rSurname.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rSurname.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(tfSurname.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(tfSurname.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(rBirthdate.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rBirthdate.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(dpBirthday.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(dpBirthday.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO, new KeyValue(rPhonenumber.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rPhonenumber.translateYProperty(), 0)));
+		tmDown.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO, new KeyValue(tfPhoneNumber.translateYProperty(), -10)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(tfPhoneNumber.translateYProperty(), 0)));
+
+	}
+
+	public void textlinesUp(){
+
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(rUsername.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rUsername.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(tfUsername.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(tfUsername.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(rPassword.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rPassword.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(pfPassword.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(pfPassword.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO, new KeyValue(rSchoolnumber.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rSchoolnumber.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO, new KeyValue(tfSchoolNumber.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(tfSchoolNumber.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(rEmail.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rEmail.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(tfEmail.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(tfEmail.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(rName.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rName.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(tfName.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(tfName.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(rSurname.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rSurname.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(tfSurname.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(tfSurname.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(rBirthdate.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rBirthdate.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(dpBirthday.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(dpBirthday.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO, new KeyValue(rPhonenumber.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(rPhonenumber.translateYProperty(), -10)));
+		tmDown.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO, new KeyValue(tfPhoneNumber.translateYProperty(), 0)),
+				new KeyFrame(Duration.millis(100.0d), new KeyValue(tfPhoneNumber.translateYProperty(), -10)));
+
+	}
+
+
+}

@@ -30,12 +30,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="userSchoolNum" styleClass="text-xsmall" text="Label" GridPane.columnIndex="1">
+                  <Label fx:id="lbSchoolidentity" styleClass="text-xsmall" text="Label" GridPane.columnIndex="1">
                      <padding>
                         <Insets top="48.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="userInfo" styleClass="text-medium" text="Label" GridPane.columnIndex="1">
+                  <Label fx:id="lbName" styleClass="text-medium" text="Label" GridPane.columnIndex="1">
                      <padding>
                         <Insets top="30.0" />
                      </padding>
@@ -103,5 +103,7 @@
    <stylesheets>
       <URL value="@styles/application.css" />
       <URL value="@styles/fonts.css" />
+      <URL value="@styles/customer.css" />
+
    </stylesheets>
 </BorderPane>

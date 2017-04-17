@@ -22,6 +22,18 @@ public class User {
 		this.isLabrarian = isLabrarian;
 	}
 
+	public void logout(){
+		this.username = "";
+		this.email = "";
+		this.name = "";
+		this.surname = "";
+		this.phoneNumber = "";
+		this.birthDate = null;
+		this.userId = 0;
+		this.schoolNumber = 0;
+		this.isLabrarian = 0;
+	}
+
 	public String getUsername() {
 		return username;
 	}
