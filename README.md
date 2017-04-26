@@ -9,6 +9,10 @@ Library Book Loan System desktop application for BBM487 Software Engineering Lab
 | 21228731      | Mahmut Tekinyer |   Analyst & Technical Writer |
 | 21327618      | Ayşe Akcan      |   Architecht & Tester |
 
+
+## Geçici not
+Demo'da sunduğumuz proje dosyalarını commitlerken fazla dosya biriktiği için bir takılma yaşadık, discard reset yaptığımızda da localdeki projeyi remote'daki son hale çevirdi kodları geri getirmeye çalışıyoruz. bin klasörüne dokunmadığı için .class dosyaları mevcut, onları bir şekilde decompile edip çalışabilir hale getirdiğimizde kaynak kodları hızlı bir şekilde buraya commitleyeceğiz.
+
 ## Academic Integrity
 
 According to the Center for Academic Integrity (www.academicintegrity.org), academic integrity begins as a commitment to five fundamental values: honesty, trust, fairness, respect and responsibility. These values begin with the individual and extend to others in the community of learning. In the classroom, they give rise to the following concrete but non-exhaustive rules for student behavior:
