@@ -11,7 +11,7 @@ Library Book Loan System desktop application for BBM487 Software Engineering Lab
 
 
 ## Geçici not
-Demo'da sunduğumuz proje dosyalarını commitlerken fazla dosya biriktiği için bir takılma yaşadık, discard reset yaptığımızda da localdeki projeyi remote'daki son hale çevirdi kodları geri getirmeye çalışıyoruz. bin klasörüne dokunmadığı için .class dosyaları mevcut, onları bir şekilde decompile edip çalışabilir hale getirdiğimizde kaynak kodları hızlı bir şekilde buraya commitleyeceğiz.
+Demo'da sunduğumuz proje dosyalarını commitlerken fazla dosya biriktiği için bir takılma yaşadık, discard reset yaptığımızda da localdeki projeyi remote'daki son hale çevirdi kodları geri getirmeye çalışıyoruz. bin klasörüne dokunmadığı için .class dosyaları mevcut, onları bir şekilde decompile edip çalışabilir hale getirdiğimizde kaynak kodları hızlı bir şekilde buraya commitleyeceğiz..
 
 ## Academic Integrity
 
