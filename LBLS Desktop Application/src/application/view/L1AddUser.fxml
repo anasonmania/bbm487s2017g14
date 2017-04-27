@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.net.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.L1AddUser">
+   <top>
+      <GridPane fx:id="paneHeader" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="253.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="253.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="96.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#logout" styleClass="button-logout" text="LOGOUT" GridPane.columnIndex="2" />
+            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="icon-add-customer" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets right="140.0" />
+               </GridPane.margin>
+            </Pane>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-large-bold" text="ADD USER" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Text>
+            <Button fx:id="btnBack" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#back" styleClass="button-back" text="Button" GridPane.halignment="RIGHT" />
+         </children>
+      </GridPane>
+   </top>
+   <left>
+      <Pane maxWidth="-Infinity" prefHeight="200.0" prefWidth="253.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane maxWidth="-Infinity" prefHeight="200.0" prefWidth="253.0" BorderPane.alignment="CENTER" />
+   </right>
+   <center>
+      <GridPane fx:id="paneCenter" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="430.0" prefWidth="720.0" vgap="30.0" BorderPane.alignment="TOP_CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="720.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <GridPane fx:id="paneContent" vgap="20.0" GridPane.halignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="160.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="240.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="480.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="160.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <GridPane maxHeight="-Infinity" prefHeight="160.0" vgap="20.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="480.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <TextField fx:id="tfUsername" onKeyTyped="#lineUsername" styleClass="text-field-wide" translateY="-10.0" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+                                 <GridPane.margin>
+                                    <Insets left="30.0" right="30.0" />
+                                 </GridPane.margin></TextField>
+                              <Rectangle fx:id="rUsername" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="410.0" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+                                 <GridPane.margin>
+                                    <Insets left="30.0" />
+                                 </GridPane.margin>
+                              </Rectangle>
+                              <Rectangle fx:id="rPassword" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="410.0" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                                 <GridPane.margin>
+                                    <Insets left="30.0" />
+                                 </GridPane.margin>
+                              </Rectangle>
+                              <Label fx:id="lbUsername" styleClass="text-tfheader" text="Username *" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                                 <GridPane.margin>
+                                    <Insets left="40.0" />
+                                 </GridPane.margin>
+                              </Label>
+
+                              <Label fx:id="tfPassword" styleClass="text-tfheader" text="Password *" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                                 <GridPane.margin>
+                                    <Insets left="40.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label fx:id="warnUsername" opacity="0.0" styleClass="text-xsmall-red" text="This username is already taken" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                                 <GridPane.margin>
+                                    <Insets left="40.0" top="16.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label fx:id="warnPassword" layoutX="50.0" layoutY="26.0" opacity="0.0" styleClass="text-xsmall-red" text="This username is already taken" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                                 <GridPane.margin>
+                                    <Insets left="40.0" top="16.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <PasswordField fx:id="pfPassword" onKeyTyped="#linePassword" styleClass="password-field-wide" translateY="-10.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                                 <GridPane.margin>
+                                    <Insets left="30.0" right="30.0" />
+                                 </GridPane.margin>
+                              </PasswordField>
+                           </children>
+                        </GridPane>
+                        <Pane fx:id="imageUser" onMouseClicked="#selectImage" onMouseEntered="#incImagefield" onMouseExited="#decImagefield" opacity="0.4" prefHeight="200.0" prefWidth="200.0" styleClass="book-image-square" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin></Pane>
+                     </children>
+                  </GridPane>
+                  <GridPane vgap="20.0" GridPane.rowIndex="1">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TextField fx:id="tfSchoolNumber" onKeyTyped="#lineSchoolNumber" styleClass="text-field-small" translateY="-10.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                        <TextField fx:id="tfEmail" layoutX="35.0" layoutY="44.0" onKeyTyped="#lineEmail" styleClass="text-field-small" translateY="-10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                        <TextField fx:id="tfName" layoutX="385.0" layoutY="44.0" onKeyTyped="#lineName" styleClass="text-field-small" translateY="-10.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                        <TextField fx:id="tfSurname" layoutX="10.0" layoutY="27.0" onKeyTyped="#lineSurname" styleClass="text-field-small" translateY="-10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                        <TextField fx:id="tfPhoneNumber" layoutX="10.0" layoutY="27.0" onKeyTyped="#linePhoneNumber" styleClass="text-field-small" translateY="-10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+                        <Rectangle fx:id="rSchoolnumber" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="300.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                        <Rectangle fx:id="rEmail" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" layoutX="10.0" layoutY="45.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="300.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                        <Rectangle fx:id="rName" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" layoutX="360.0" layoutY="45.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="300.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                        <Rectangle fx:id="rSurname" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" layoutX="10.0" layoutY="135.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="300.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                        <Rectangle fx:id="rBirthdate" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" layoutX="360.0" layoutY="135.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="300.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+                        <Rectangle fx:id="rPhonenumber" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" layoutX="10.0" layoutY="225.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="300.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+                        <Label fx:id="lbUsername1" styleClass="text-tfheader" text="School Number *" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="lbUsername11" layoutX="10.0" layoutY="38.0" styleClass="text-tfheader" text="E-Mail *" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="lbUsername111" layoutX="360.0" layoutY="38.0" styleClass="text-tfheader" text="Name" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="lbUsername1111" layoutX="10.0" layoutY="128.0" styleClass="text-tfheader" text="Surname" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="lbUsername11111" layoutX="360.0" layoutY="128.0" styleClass="text-tfheader" text="Birthdate" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="lbUsername111111" layoutX="10.0" layoutY="218.0" styleClass="text-tfheader" text="Phone Number" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <DatePicker fx:id="dpBirthday" onAction="#lineBirthday" translateY="-10.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                           <GridPane.margin>
+                              <Insets left="24.0" right="24.0" />
+                           </GridPane.margin>
+                        </DatePicker>
+                        <Label fx:id="warnSchoolnumber" opacity="0.0" styleClass="text-xsmall-red" text="This username is already taken" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="40.0" top="16.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="warnEmail" layoutX="50.0" layoutY="26.0" opacity="0.0" styleClass="text-xsmall-red" text="This username is already taken" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="40.0" top="16.0" />
+                           </GridPane.margin>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children>
+               <GridPane.margin>
+                  <Insets right="20.0" />
+               </GridPane.margin>
+            </GridPane>
+        	<Label fx:id="lbCreated" opacity="0.0" styleClass="text-welcome" text="Your account has created successfully!" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Pane fx:id="iconTick" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.0" prefHeight="80.0" prefWidth="80.0" styleClass="icon-tick" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets bottom="160.0" />
+               </GridPane.margin>
+            </Pane>
+         </children>
+         <BorderPane.margin>
+            <Insets top="30.0" />
+         </BorderPane.margin>
+      </GridPane>
+   </center>
+   <stylesheets>
+      <URL value="@styles/application.css" />
+      <URL value="@styles/fonts.css" />
+      <URL value="@styles/librarian.css" />
+   </stylesheets>
+   <bottom>
+      <GridPane vgap="20.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" onAction="#addNewUser" styleClass="button-green" text="Add Book" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Label styleClass="text-xsmall" text="© Group 14 , 2017" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+            </Label>
+         </children>
+      </GridPane>
+   </bottom>
+</BorderPane>

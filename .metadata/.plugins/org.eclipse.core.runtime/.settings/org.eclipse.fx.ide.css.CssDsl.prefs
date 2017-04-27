@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+org.eclipse.fx.ide.css.CssDsl.syntaxColorer.tokenStyles.DeclarationName.color=0,152,225
+org.eclipse.fx.ide.css.CssDsl.syntaxColorer.tokenStyles.ELEMENT.color=6,200,147
+org.eclipse.fx.ide.css.CssDsl.syntaxColorer.tokenStyles.Selector.color=255,255,0
+org.eclipse.fx.ide.css.CssDsl.syntaxColorer.tokenStyles.Url.color=128,255,128

@@ -1,0 +1,14 @@
+package application.controller;
+
+import java.sql.Date;
+import java.time.LocalDate;
+
+public class DBFormatController {
+	public static Date dateToDatabase(LocalDate entityValue) {
+		return Date.valueOf(entityValue);
+	}
+
+	public static LocalDate dateToJava(Date databaseValue) {
+		return databaseValue.toLocalDate();
+	}
+}
