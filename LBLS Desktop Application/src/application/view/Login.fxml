@@ -72,8 +72,8 @@
 
          </children>
       </GridPane>
-      <Button fx:id="login" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogin" styleClass="button-green" text="Login" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-      <Button fx:id="createAccount" mnemonicParsing="false" onAction="#handleCreateAccount" prefHeight="48.0" styleClass="button-grey" text="Create Account" GridPane.rowIndex="6" />
+      <Button fx:id="login" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogin" styleClass="button-green" text="Login" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <Button fx:id="createAccount" mnemonicParsing="false" onAction="#handleCreateAccount" prefHeight="48.0" styleClass="button-grey" text="Create Account" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
       <Pane fx:id="paneLogo" prefHeight="200.0" prefWidth="200.0" styleClass="logo-view" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets />

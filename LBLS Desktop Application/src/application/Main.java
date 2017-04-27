@@ -1,56 +1,39 @@
 package application;
 
-
-
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import application.view.*;
-import application.model.DbProperties;
+import application.model.Book;
 import application.model.User;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.fxml.FXMLLoader;
-
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class Main extends Application {
-
-
 	private static Stage pStage;
 	public static Connection con;
 	public static User currentUser;
-	@Override
+	public static User selectedUser;
+	public static Book selectedBook;
+
 	public void start(Stage primaryStage) {
 		try {
-			GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("view/Login.fxml"));
-			//BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("HomePage.fxml"));
-			Scene scene = new Scene(root,1366,768);
-			//Scene signUpSc = new Scene(signUp, 1366, 768);
-			/*scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());*/
+			GridPane e = (GridPane) FXMLLoader.load(this.getClass().getResource("view/Login.fxml"));
+			Scene scene = new Scene(e, 1366.0D, 768.0D);
 			primaryStage.setScene(scene);
 			pStage = primaryStage;
 			primaryStage.show();
-
-		} catch(Exception e) {
-			e.printStackTrace();
+		} catch (Exception arg3) {
+			arg3.printStackTrace();
 		}
-	}
 
+	}
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.jdbc.Driver");
-		con = DriverManager.getConnection("jdbc:mysql://" + DbProperties.host + ":" + DbProperties.port + "/" + DbProperties.dbname, DbProperties.username, DbProperties.password);
-
-		PreparedStatement statement = con.prepareStatement("SELECT password FROM user WHERE username = 'anasonmania' ");
-		ResultSet result = statement.executeQuery();
-
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb", "root", "admin");
 		launch(args);
 	}
 }

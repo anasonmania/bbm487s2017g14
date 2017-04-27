@@ -10,141 +10,23 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane maxHeight="768.0" maxWidth="1366.0" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CreateAccount">
-   <center>
-      <GridPane alignment="TOP_CENTER" hgap="20.0" maxHeight="-Infinity" maxWidth="860.0" prefHeight="400.0" prefWidth="860.0" vgap="30.0" BorderPane.alignment="TOP_CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
+   <left>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="370.0" prefWidth="253.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="370.0" prefWidth="253.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <VBox fx:id="paneBottom" alignment="TOP_CENTER" maxHeight="-Infinity" prefHeight="220.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField id="tfUsername" fx:id="tfUsername" onKeyTyped="#lineUsername" translateY="-10.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin></TextField>
-            <PasswordField fx:id="pfPassword" onDragDetected="#linePassword" onKeyTyped="#linePassword" translateY="-10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin></PasswordField>
-            <TextField fx:id="tfSchoolNumber" onKeyTyped="#lineSchoolNumber" translateY="-10.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin></TextField>
-            <TextField fx:id="tfEmail" onKeyTyped="#lineEmail" translateY="-10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin></TextField>
-            <TextField fx:id="tfName" onKeyTyped="#lineName" translateY="-10.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin></TextField>
-            <TextField fx:id="tfSurname" onKeyTyped="#lineSurname" translateY="-10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin></TextField>
-            <DatePicker fx:id="dpBirthday" onAction="#lineBirthday" onInputMethodTextChanged="#lineBirthday" onKeyPressed="#lineBirthday" onKeyTyped="#lineBirthday" styleClass="dat" translateY="-10.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin></DatePicker>
-            <TextField fx:id="tfPhoneNumber" onKeyTyped="#linePhoneNumber" translateY="-10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin></TextField>
-            <Label styleClass="text-tfheader" text="USERNAME" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+            <Label styleClass="text-xsmall" text="* Please fill the necessary fields" />
+            <Button mnemonicParsing="false" onAction="#createAccount" styleClass="button-green" text="Create New Account">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Label>
-            <Label styleClass="text-tfheader" text="PASSWORD" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Label>
-            <Label styleClass="text-tfheader" text="SCHOOL NUMBER" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Label>
-            <Label styleClass="text-tfheader" text="E-MAIL" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Label>
-            <Label styleClass="text-tfheader" text="NAME" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Label>
-            <Label styleClass="text-tfheader" text="SURNAME" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Label>
-            <Label styleClass="text-tfheader" text="DATE OF BIRTH" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Label>
-            <Label styleClass="text-tfheader" text="PHONE NUMBER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Label>
-            <Label fx:id="warnUsername" opacity="0.0" styleClass="text-xsmall-red" text="This username is already taken" GridPane.halignment="LEFT" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="40.0" top="16.0" />
-               </GridPane.margin>
-            </Label>
-            <Label fx:id="warnEmail" mnemonicParsing="true" opacity="0.0" styleClass="text-xsmall-red" text="This is not a valid e-mail" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="40.0" top="16.0" />
-               </GridPane.margin>
-            </Label>
-            <Rectangle fx:id="rUsername" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-            <Rectangle fx:id="rPassword" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-         	<Rectangle fx:id="rSchoolnumber" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-         	<Rectangle fx:id="rEmail" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-         	<Rectangle fx:id="rName" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-         	<Rectangle fx:id="rSurname" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-         	<Rectangle fx:id="rBirthdate" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-         	<Rectangle fx:id="rPhonenumber" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-            <Label fx:id="warnSchoolnumber" opacity="0.0" styleClass="text-xsmall-red" text="This number is being used by an account" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="40.0" top="16.0" />
-               </GridPane.margin>
-            </Label>
-            <Label fx:id="warnPassword" opacity="0.0" styleClass="text-xsmall-red" text="Label" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="40.0" top="16.0" />
-               </GridPane.margin>
-            </Label>
-         </children>
-         <BorderPane.margin>
-            <Insets top="60.0" />
-         </BorderPane.margin>
-      </GridPane>
-   </center>
-   <left>
-      <Pane maxWidth="-Infinity" prefHeight="200.0" prefWidth="253.0" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <Pane maxWidth="-Infinity" prefHeight="200.0" prefWidth="253.0" BorderPane.alignment="CENTER" />
-   </right>
-   <bottom>
-      <VBox alignment="TOP_CENTER" prefHeight="160.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button mnemonicParsing="false" onAction="#createAccount" styleClass="button-green" text="Create New Account" />
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin></Button>
          </children></VBox>
    </bottom>
    <stylesheets>
@@ -152,7 +34,7 @@
       <URL value="@styles/fonts.css" />
    </stylesheets>
    <top>
-      <GridPane BorderPane.alignment="CENTER">
+      <GridPane fx:id="paneHeader" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="253.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="144.0" />
@@ -176,4 +58,155 @@
          </children>
       </GridPane>
    </top>
+   <center>
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="370.0" prefWidth="860.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <GridPane fx:id="paneForm" alignment="TOP_CENTER" hgap="20.0" maxHeight="-Infinity" maxWidth="860.0" prefHeight="370.0" prefWidth="860.0" vgap="30.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <children>
+                  <TextField id="tfUsername" fx:id="tfUsername" onKeyTyped="#lineUsername" translateY="-10.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </TextField>
+                  <PasswordField fx:id="pfPassword" onDragDetected="#linePassword" onKeyTyped="#linePassword" translateY="-10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </PasswordField>
+                  <TextField fx:id="tfSchoolNumber" onKeyTyped="#lineSchoolNumber" translateY="-10.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="tfEmail" onKeyTyped="#lineEmail" translateY="-10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="tfName" onKeyTyped="#lineName" translateY="-10.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="tfSurname" onKeyTyped="#lineSurname" translateY="-10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </TextField>
+                  <DatePicker fx:id="dpBirthday" onAction="#lineBirthday" onInputMethodTextChanged="#lineBirthday" onKeyPressed="#lineBirthday" onKeyTyped="#lineBirthday" styleClass="dat" translateY="-10.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </DatePicker>
+                  <TextField fx:id="tfPhoneNumber" onKeyTyped="#linePhoneNumber" translateY="-10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label styleClass="text-tfheader" text="Username *" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label styleClass="text-tfheader" text="Password *" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label styleClass="text-tfheader" text="School number *" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label styleClass="text-tfheader" text="E-mail *" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label styleClass="text-tfheader" text="Name" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label styleClass="text-tfheader" text="Surname" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label styleClass="text-tfheader" text="Date of birth" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label styleClass="text-tfheader" text="Phone number" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="warnUsername" opacity="0.0" styleClass="text-xsmall-red" text="This username is already taken" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" top="16.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="warnEmail" mnemonicParsing="true" opacity="0.0" styleClass="text-xsmall-red" text="This is not a valid e-mail" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" top="16.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Rectangle fx:id="rUsername" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                  <Rectangle fx:id="rPassword" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+               	<Rectangle fx:id="rSchoolnumber" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+               	<Rectangle fx:id="rEmail" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+               	<Rectangle fx:id="rName" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+               	<Rectangle fx:id="rSurname" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+               	<Rectangle fx:id="rBirthdate" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
+               	<Rectangle fx:id="rPhonenumber" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" translateY="-10.0" width="360.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
+                  <Label fx:id="warnSchoolnumber" opacity="0.0" styleClass="text-xsmall-red" text="This number is being used by an account" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" top="16.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="warnPassword" opacity="0.0" styleClass="text-xsmall-red" text="Label" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" top="16.0" />
+                     </GridPane.margin>
+                  </Label>
+               </children>
+            </GridPane>
+            <Label fx:id="lbCreated" opacity="0.0" styleClass="text-welcome" text="Your account has created successfully!" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Pane fx:id="iconTick" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.0" prefHeight="80.0" prefWidth="80.0" styleClass="icon-tick" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets bottom="160.0" />
+               </GridPane.margin>
+            </Pane>
+            <Button fx:id="btnClicktologin" mnemonicParsing="false" onAction="#back" opacity="0.0" styleClass="button-grey" text="Click to login" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets top="160.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+      </GridPane>
+   </center>
 </BorderPane>

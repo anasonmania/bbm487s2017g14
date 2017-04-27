@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
@@ -62,7 +63,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <GridPane fx:id="paneButtons" opacity="0.0" GridPane.rowIndex="1">
+            <GridPane fx:id="paneButtons" GridPane.rowIndex="1">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -72,19 +73,19 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="btnGrid1" contentDisplay="TOP" mnemonicParsing="false" opacity="0.0" styleClass="button-grid-1" text="Loan Book" textOverrun="CLIP" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+                  <Button fx:id="btnGrid1" contentDisplay="TOP" mnemonicParsing="false" onAction="#addUser" opacity="0.0" styleClass="button-grid-adduser" text="Add User" textOverrun="CLIP" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
                      <GridPane.margin>
                         <Insets bottom="20.0" right="20.0" />
                      </GridPane.margin></Button>
-                  <Button fx:id="btnGrid2" contentDisplay="TOP" mnemonicParsing="false" opacity="0.0" styleClass="button-grid-1" text="Button" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+                  <Button fx:id="btnGrid2" contentDisplay="TOP" mnemonicParsing="false" onAction="#editUser" opacity="0.0" styleClass="button-grid-edituser" text="Edit User" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
                      <GridPane.margin>
                         <Insets bottom="20.0" left="20.0" />
                      </GridPane.margin></Button>
-                  <Button fx:id="btnGrid3" contentDisplay="TOP" mnemonicParsing="false" opacity="0.0" styleClass="button-grid-1" text="Button" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                  <Button fx:id="btnGrid3" contentDisplay="TOP" mnemonicParsing="false" onAction="#addBook" opacity="0.0" styleClass="button-grid-addbook" text="Add Book" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets right="20.0" top="20.0" />
                      </GridPane.margin></Button>
-                  <Button fx:id="btnGrid4" contentDisplay="TOP" mnemonicParsing="false" opacity="0.0" styleClass="button-grid-1" text="Button" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                  <Button fx:id="btnGrid4" contentDisplay="TOP" mnemonicParsing="false" opacity="0.0" styleClass="button-grid-editbook" text="Edit Book" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets left="20.0" top="20.0" />
                      </GridPane.margin></Button>
@@ -104,6 +105,7 @@
                   <TextField fx:id="tfSearch" onKeyTyped="#lineSearch" prefHeight="34.0" prefWidth="449.0" styleClass="text-field-wide" GridPane.valignment="BOTTOM" />
                   <GridPane fx:id="lnSearch" styleClass="text-line-wide" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
                   <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="47.0" prefWidth="143.0" styleClass="button-search" text="SEARCH" GridPane.columnIndex="1" />
+                  <Rectangle fx:id="rSearch" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" width="480.0" GridPane.valignment="BOTTOM" />
                </children>
             </GridPane>
          </children>
@@ -114,4 +116,11 @@
       <URL value="@styles/fonts.css" />
       <URL value="@styles/librarian.css" />
    </stylesheets>
+   <bottom>
+      <Label styleClass="text-xsmall" text="© Group 14 , 2017" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </Label>
+   </bottom>
 </BorderPane>

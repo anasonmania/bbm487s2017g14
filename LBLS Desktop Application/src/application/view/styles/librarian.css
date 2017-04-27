@@ -15,7 +15,7 @@
 	-fx-background-color: #ffffff;
 	-fx-background-radius: 12.0;
 	-fx-background-fills: #ffffff;
-	-fx-graphic: url("../../../../resources/images/icon_book.png");
+	-fx-graphic: url("../../../../resources/images/icon_addcustomer.png");
 	-fx-graphic-text-gap: 0;
 	-fx-opacity: 0.8;
 	-fx-text-fill: #727986;
@@ -35,7 +35,166 @@
 	-fx-background-color: #ffffff;
 	-fx-background-radius: 12;
 	-fx-background-fills: #ffffff;
-	-fx-graphic: url("../../../../resources/images/icon_book_red.png");
+	-fx-graphic: url("../../../../resources/images/icon_addcustomer_red.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #d41923;
+	-fx-opacity: 1.0;
+	-fx-pref-width: 240.0;
+	-fx-pref-height: 200.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #d41923;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+}
+
+.button-grid-adduser{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12.0;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("../../../../resources/images/icon_addcustomer.png");
+	-fx-graphic-text-gap: 0;
+	-fx-opacity: 0.8;
+	-fx-text-fill: #727986;
+	-fx-pref-width: 240.0;
+	-fx-pref-height: 200.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #e5e5e5;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+
+}
+
+.button-grid-adduser:hover{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("../../../../resources/images/icon_addcustomer_red.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #d41923;
+	-fx-opacity: 1.0;
+	-fx-pref-width: 240.0;
+	-fx-pref-height: 200.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #d41923;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+}
+
+
+.button-grid-edituser{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12.0;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("../../../../resources/images/icon_editcustomer.png");
+	-fx-graphic-text-gap: 0;
+	-fx-opacity: 0.8;
+	-fx-text-fill: #727986;
+	-fx-pref-width: 240.0;
+	-fx-pref-height: 200.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #e5e5e5;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+
+}
+
+.button-grid-edituser:hover{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("../../../../resources/images/icon_editcustomer_red.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #d41923;
+	-fx-opacity: 1.0;
+	-fx-pref-width: 240.0;
+	-fx-pref-height: 200.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #d41923;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+}
+
+
+.button-grid-addbook{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12.0;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("../../../../resources/images/icon_addbook.png");
+	-fx-graphic-text-gap: 0;
+	-fx-opacity: 0.8;
+	-fx-text-fill: #727986;
+	-fx-pref-width: 240.0;
+	-fx-pref-height: 200.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #e5e5e5;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+
+}
+
+.button-grid-addbook:hover{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("../../../../resources/images/icon_addbook_red.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #d41923;
+	-fx-opacity: 1.0;
+	-fx-pref-width: 240.0;
+	-fx-pref-height: 200.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #d41923;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+}
+
+
+.button-grid-editbook{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12.0;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("../../../../resources/images/icon_editbook.png");
+	-fx-graphic-text-gap: 0;
+	-fx-opacity: 0.8;
+	-fx-text-fill: #727986;
+	-fx-pref-width: 240.0;
+	-fx-pref-height: 200.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #e5e5e5;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+
+}
+
+.button-grid-editbook:hover{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("../../../../resources/images/icon_editbook_red.png");
 	-fx-graphic-text-gap: 0;
 	-fx-text-fill: #d41923;
 	-fx-opacity: 1.0;

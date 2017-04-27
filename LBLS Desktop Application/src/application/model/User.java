@@ -1,16 +1,22 @@
 package application.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import javafx.scene.image.Image;
 
 public class User {
+	private String username;
+	private String email;
+	private String name;
+	private String surname;
+	private String phoneNumber;
+	private LocalDate birthDate;
+	private int userId;
+	private int schoolNumber;
+	private int islibrarian;
+	private Image profilePic;
 
-	private String username, email, name, surname, phoneNumber;
-	private Date birthDate;
-	private int userId, schoolNumber, isLabrarian;
-
-	public User(String username, String email, String name, String surname, String phoneNumber,
-			Date birthDate, int userId, int schoolNumber, int isLabrarian) {
-		super();
+	public User(String username, String email, String name, String surname, String phoneNumber, LocalDate birthDate,
+			int userId, int schoolNumber, Image profilePic, int islibrarian) {
 		this.username = username;
 		this.email = email;
 		this.name = name;
@@ -19,10 +25,11 @@ public class User {
 		this.birthDate = birthDate;
 		this.userId = userId;
 		this.schoolNumber = schoolNumber;
-		this.isLabrarian = isLabrarian;
+		this.profilePic = profilePic;
+		this.islibrarian = islibrarian;
 	}
 
-	public void logout(){
+	public void logout() {
 		this.username = "";
 		this.email = "";
 		this.name = "";
@@ -31,11 +38,11 @@ public class User {
 		this.birthDate = null;
 		this.userId = 0;
 		this.schoolNumber = 0;
-		this.isLabrarian = 0;
+		this.islibrarian = 0;
 	}
 
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 
 	public void setUsername(String username) {
@@ -43,7 +50,7 @@ public class User {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
@@ -51,7 +58,7 @@ public class User {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -59,7 +66,7 @@ public class User {
 	}
 
 	public String getSurname() {
-		return surname;
+		return this.surname;
 	}
 
 	public void setSurname(String surname) {
@@ -67,23 +74,23 @@ public class User {
 	}
 
 	public String getPhoneNumber() {
-		return phoneNumber;
+		return this.phoneNumber;
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Date getBirthDate() {
-		return birthDate;
+	public LocalDate getBirthDate() {
+		return this.birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 
 	public int getUserId() {
-		return userId;
+		return this.userId;
 	}
 
 	public void setUserId(int userId) {
@@ -91,21 +98,26 @@ public class User {
 	}
 
 	public int getSchoolNumber() {
-		return schoolNumber;
+		return this.schoolNumber;
 	}
 
 	public void setSchoolNumber(int schoolNumber) {
 		this.schoolNumber = schoolNumber;
 	}
 
-	public int getIsLabrarian() {
-		return isLabrarian;
+	public int getIslibrarian() {
+		return this.islibrarian;
 	}
 
-	public void setIsLabrarian(int isLabrarian) {
-		this.isLabrarian = isLabrarian;
+	public void setIslibrarian(int islibrarian) {
+		this.islibrarian = islibrarian;
 	}
 
+	public Image getProfilePic() {
+		return this.profilePic;
+	}
 
-
+	public void setProfilePic(Image profilePic) {
+		this.profilePic = profilePic;
+	}
 }

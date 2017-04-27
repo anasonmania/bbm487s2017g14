@@ -1,14 +1,10 @@
 package application.controller;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
-
-import com.sun.media.jfxmedia.events.NewFrameEvent;
+import java.time.LocalDate;
 
 import application.Main;
 import application.model.User;
@@ -22,7 +18,6 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -39,37 +35,34 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Login {
-
 	public Button createAccount;
 	public Button login;
 	public TextField tfUsername;
 	public PasswordField pfPassword;
-	public Rectangle rUsername, rPassword;
-	public Label lbUsername, lbPassword, lbWelcome, lbUserdata;
+	public Rectangle rUsername;
+	public Rectangle rPassword;
+	public Label lbUsername;
+	public Label lbPassword;
+	public Label lbWelcome;
+	public Label lbUserdata;
 	public Boolean loginControl;
 	public Boolean failControl = false;
 	public Pane paneLogo;
-
 	public GridPane paneMain;
 	public HBox boxFailed;
-
-	private Duration opacityFactor = Duration.millis(300.0d);
-
+	private Duration opacityFactor = Duration.millis(300.0D);
 	private FillTransition usernameToRed;
 	private FillTransition usernameToGrey;
 	private FillTransition passwordToRed;
 	private FillTransition passwordToGrey;
-
 	private Timeline failExpand;
 	private Timeline failCollapse;
-
 	private FadeTransition showFail;
 	private FadeTransition hideFail;
 	private FadeTransition showWelcome;
 	private FadeTransition hideWelcome;
 	private FadeTransition showUserdata;
 	private FadeTransition hideUserdata;
-
 	private FadeTransition hideUsernametf;
 	private FadeTransition showUsernamelb;
 	private FadeTransition hideUsernamelb;
@@ -89,250 +82,233 @@ public class Login {
 		setSizeAnims();
 		setOpacityAnims();
 		setColorAnims();
-
-		String inputUsername, inputUserpass;
-		inputUsername = tfUsername.getText();
-		inputUserpass = pfPassword.getText();
+		String inputUsername = tfUsername.getText();
+		String inputUserpass = pfPassword.getText();
 		PreparedStatement statement = Main.con
-				.prepareStatement("SELECT password FROM user WHERE username = '" + inputUsername + "' ");
-
+				.prepareStatement("SELECT password FROM user WHERE username = \'" + inputUsername + "\' ");
 		ResultSet result = statement.executeQuery();
-		String temp = null;
 
-		while (result.next()) {
-			temp = result.getString(1);
+		String temp;
+		for (temp = null; result.next(); temp = result.getString(1)) {
+			;
 		}
 
-		if (temp != null) {
-			if (temp.equals(inputUserpass)) {
-				loginControl = true;
-				statement = Main.con.prepareStatement("SELECT * from user WHERE username = '" + inputUsername + "' ");
-				result = statement.executeQuery();
-				while (result.next()) {
-					Main.currentUser = new User(result.getString("username"), result.getString("email"),
-							result.getString("name"), result.getString("surname"), result.getString("phonenumber"),
-							result.getDate("birthdate"), result.getInt("iduserinfo"), result.getInt("schoolnumber"),
-							result.getInt("islibrarian"));
-					System.out.println(result.getString("username"));
-					System.out.println(Main.currentUser.getSurname());
+		if (temp != null && temp.equals(inputUserpass)) {
+			loginControl = true;
+			statement = Main.con.prepareStatement("SELECT * from user WHERE username = \'" + inputUsername + "\' ");
+			result = statement.executeQuery();
 
-				}
-
-				int islabrarian = Main.currentUser.getIsLabrarian();
-
-				lbUserdata.setText(Main.currentUser.getName() + " " + Main.currentUser.getSurname());
-				if (islabrarian > 0) {
-					Parent newParent;
-					hideUsernametf.play();
-					hideUsernamelb.play();
-					hideUsernamer.play();
-					hidePasswordpf.play();
-					hidePasswordlb.play();
-					hidePasswordr.play();
-					hideLogin.play();
-					hideCreateaccount.play();
-					hideLogo.play();
-					showWelcome.play();
-					showUserdata.play();
-					newParent = FXMLLoader.load(getClass().getResource("../view/HomePageLibrarian.fxml"));
-					Scene newScreen = new Scene(newParent);
-
-					Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-					Task<Void> sleeper = new Task<Void>() {
-						@Override
-						protected Void call() throws Exception {
-							try {
-								Thread.sleep((long) opacityFactor.toMillis() * 3);
-							} catch (InterruptedException e) {
-							}
-							return null;
-						}
-					};
-					sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-						@Override
-						public void handle(WorkerStateEvent event) {
-							appStage.setScene(newScreen);
-							appStage.show();
-						}
-					});
-					new Thread(sleeper).start();
-				} else {
-					Parent newParent;
-					hideUsernametf.play();
-					hideUsernamelb.play();
-					hideUsernamer.play();
-					hidePasswordpf.play();
-					hidePasswordlb.play();
-					hidePasswordr.play();
-					hideLogin.play();
-					hideCreateaccount.play();
-					hideLogo.play();
-					showWelcome.play();
-					showUserdata.play();
-					newParent = FXMLLoader.load(getClass().getResource("../view/HomePageCustomer.fxml"));
-					Scene newScreen = new Scene(newParent);
-					Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-					Task<Void> sleeper = new Task<Void>() {
-						@Override
-						protected Void call() throws Exception {
-							try {
-								Thread.sleep((long) opacityFactor.toMillis() * 3);
-							} catch (InterruptedException e) {
-							}
-							return null;
-						}
-					};
-					sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-						@Override
-						public void handle(WorkerStateEvent event) {
-							appStage.setScene(newScreen);
-							appStage.show();
-						}
-					});
-					new Thread(sleeper).start();
-				}
-
-				System.out.println(Main.currentUser.getBirthDate());
-				System.out.println(Main.currentUser.getIsLabrarian());
+			while (result.next()) {
+				Main.currentUser = new User(result.getString("username"), result.getString("email"),
+						result.getString("name"), result.getString("surname"), result.getString("phonenumber"),
+						(LocalDate) null, result.getInt("iduserinfo"), result.getInt("schoolnumber"), (Image) null,
+						result.getInt("islibrarian"));
+				System.out.println(result.getString("username"));
+				System.out.println(Main.currentUser.getSurname());
 			}
+
+			int islabrarian = Main.currentUser.getIslibrarian();
+			lbUserdata.setText(Main.currentUser.getName() + " " + Main.currentUser.getSurname());
+			Parent newParent;
+			final Scene newScreen;
+			final Stage appStage;
+			if (islabrarian > 0) {
+				hideUsernametf.play();
+				hideUsernamelb.play();
+				hideUsernamer.play();
+				hidePasswordpf.play();
+				hidePasswordlb.play();
+				hidePasswordr.play();
+				hideLogin.play();
+				hideCreateaccount.play();
+				hideLogo.play();
+				showWelcome.play();
+				showUserdata.play();
+				newParent = (Parent) FXMLLoader.load(this.getClass().getResource("../view/HomePageLibrarian.fxml"));
+				newScreen = new Scene(newParent);
+				appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				Task<Void> sleeper = new Task<Void>() {
+		            @Override
+		            protected Void call() throws Exception {
+		                try {
+		                    Thread.sleep((long) opacityFactor.toMillis()*3);
+		                } catch (InterruptedException e) {
+		                }
+		                return null;
+		            }
+		        };
+		        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+		            @Override
+		            public void handle(WorkerStateEvent event) {
+		            	appStage.setScene(newScreen);
+		        		appStage.show();
+		            }
+		        });
+		        new Thread(sleeper).start();
+			} else {
+				hideUsernametf.play();
+				hideUsernamelb.play();
+				hideUsernamer.play();
+				hidePasswordpf.play();
+				hidePasswordlb.play();
+				hidePasswordr.play();
+				hideLogin.play();
+				hideCreateaccount.play();
+				hideLogo.play();
+				showWelcome.play();
+				showUserdata.play();
+				newParent = (Parent) FXMLLoader.load(this.getClass().getResource("../view/HomePageCustomer.fxml"));
+				newScreen = new Scene(newParent);
+				appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+				Task<Void> sleeper = new Task<Void>() {
+		            @Override
+		            protected Void call() throws Exception {
+		                try {
+		                    Thread.sleep((long) opacityFactor.toMillis()*3);
+		                } catch (InterruptedException e) {
+		                }
+		                return null;
+		            }
+		        };
+		        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+		            @Override
+		            public void handle(WorkerStateEvent event) {
+		            	appStage.setScene(newScreen);
+		        		appStage.show();
+		            }
+		        });
+		        new Thread(sleeper).start();
+			}
+
 		}
 
-		if (!loginControl) {
+		if (!loginControl.booleanValue()) {
 			failExpand.play();
 			showFail.play();
 			usernameToRed.play();
 			passwordToRed.play();
 			failControl = true;
 		}
+
 	}
 
 	public void handleCreateAccount(ActionEvent event) throws IOException {
-
-		Parent newParent = FXMLLoader.load(getClass().getResource("../view/CreateAccount.fxml"));
+		Parent newParent = (Parent) FXMLLoader.load(this.getClass().getResource("../view/CreateAccount.fxml"));
 		Scene newScreen = new Scene(newParent);
 		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		appStage.setScene(newScreen);
 		appStage.show();
-
 	}
 
 	public void lineUsername() {
-		rUsername.setOpacity(1);
-		if (failControl)
+		rUsername.setOpacity(1.0D);
+		if (failControl.booleanValue()) {
 			rollbackAnims();
+		}
+
 	}
 
 	public void linePassword() {
-		rPassword.setOpacity(1);
-		if (failControl)
+		rPassword.setOpacity(1.0D);
+		if (failControl.booleanValue()) {
 			rollbackAnims();
+		}
+
 	}
 
 	public void setColorAnims() {
-
-		/* Prepare color animations */
-		usernameToRed = new FillTransition(Duration.millis(300.0d), rUsername, Color.valueOf("#727986"),
+		usernameToRed = new FillTransition(Duration.millis(300.0D), rUsername, Color.valueOf("#727986"),
 				Color.valueOf("#d41923"));
-		usernameToGrey = new FillTransition(Duration.millis(300.0d), rUsername, Color.valueOf("#d41923"),
+		usernameToGrey = new FillTransition(Duration.millis(300.0D), rUsername, Color.valueOf("#d41923"),
 				Color.valueOf("#727986"));
-
-		passwordToRed = new FillTransition(Duration.millis(300.0d), rPassword, Color.valueOf("#727986"),
+		passwordToRed = new FillTransition(Duration.millis(300.0D), rPassword, Color.valueOf("#727986"),
 				Color.valueOf("#d41923"));
-		passwordToGrey = new FillTransition(Duration.millis(300.0d), rPassword, Color.valueOf("#d41923"),
+		passwordToGrey = new FillTransition(Duration.millis(300.0D), rPassword, Color.valueOf("#d41923"),
 				Color.valueOf("#727986"));
-
 	}
 
 	public void setSizeAnims() {
 		failExpand = new Timeline();
-		failExpand.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(boxFailed.prefHeightProperty(), 0)),
-				new KeyFrame(Duration.millis(200.0d), new KeyValue(boxFailed.prefHeightProperty(), 36)));
-
+		failExpand
+				.getKeyFrames().addAll(
+						new KeyFrame[] {
+								new KeyFrame(Duration.ZERO,
+										new KeyValue[] { new KeyValue(boxFailed.prefHeightProperty(),
+												Integer.valueOf(0)) }),
+								new KeyFrame(Duration.millis(200.0D), new KeyValue[] {
+										new KeyValue(boxFailed.prefHeightProperty(), Integer.valueOf(36)) }) });
 		failCollapse = new Timeline();
-		failCollapse.getKeyFrames().addAll(
-				new KeyFrame(Duration.ZERO, new KeyValue(boxFailed.prefHeightProperty(), 36)),
-				new KeyFrame(Duration.millis(200.0d), new KeyValue(boxFailed.prefHeightProperty(), 0)));
+		failCollapse
+				.getKeyFrames().addAll(
+						new KeyFrame[] {
+								new KeyFrame(Duration.ZERO,
+										new KeyValue[] { new KeyValue(boxFailed.prefHeightProperty(),
+												Integer.valueOf(36)) }),
+								new KeyFrame(Duration.millis(200.0D), new KeyValue[] {
+										new KeyValue(boxFailed.prefHeightProperty(), Integer.valueOf(0)) }) });
 	}
 
 	public void setOpacityAnims() {
 		showFail = new FadeTransition(opacityFactor, boxFailed);
-		showFail.setFromValue(0);
-		showFail.setToValue(1);
-
+		showFail.setFromValue(0.0D);
+		showFail.setToValue(1.0D);
 		hideFail = new FadeTransition(opacityFactor, boxFailed);
-		hideFail.setFromValue(1);
-		hideFail.setToValue(0);
-
+		hideFail.setFromValue(1.0D);
+		hideFail.setToValue(0.0D);
 		hideUsernametf = new FadeTransition(opacityFactor, tfUsername);
-		hideUsernametf.setFromValue(1);
-		hideUsernametf.setToValue(0);
-
+		hideUsernametf.setFromValue(1.0D);
+		hideUsernametf.setToValue(0.0D);
 		showUsernamelb = new FadeTransition(opacityFactor, lbUsername);
-		showUsernamelb.setFromValue(0);
-		showUsernamelb.setToValue(1);
-
+		showUsernamelb.setFromValue(0.0D);
+		showUsernamelb.setToValue(1.0D);
 		hideUsernamelb = new FadeTransition(opacityFactor, lbUsername);
-		hideUsernamelb.setFromValue(1);
-		hideUsernamelb.setToValue(0);
-
+		hideUsernamelb.setFromValue(1.0D);
+		hideUsernamelb.setToValue(0.0D);
 		showUsernamer = new FadeTransition(opacityFactor, rUsername);
-		showUsernamer.setFromValue(0);
-		showUsernamer.setToValue(1);
-
+		showUsernamer.setFromValue(0.0D);
+		showUsernamer.setToValue(1.0D);
 		hideUsernamer = new FadeTransition(opacityFactor, rUsername);
-		hideUsernamer.setFromValue(1);
-		hideUsernamer.setToValue(0);
-
+		hideUsernamer.setFromValue(1.0D);
+		hideUsernamer.setToValue(0.0D);
 		hidePasswordpf = new FadeTransition(opacityFactor, pfPassword);
-		hidePasswordpf.setFromValue(1);
-		hidePasswordpf.setToValue(0);
-
+		hidePasswordpf.setFromValue(1.0D);
+		hidePasswordpf.setToValue(0.0D);
 		showPasswordlb = new FadeTransition(opacityFactor, lbPassword);
-		showPasswordlb.setFromValue(0);
-		showPasswordlb.setToValue(1);
-
+		showPasswordlb.setFromValue(0.0D);
+		showPasswordlb.setToValue(1.0D);
 		hidePasswordlb = new FadeTransition(opacityFactor, lbPassword);
-		hidePasswordlb.setFromValue(1);
-		hidePasswordlb.setToValue(0);
-
+		hidePasswordlb.setFromValue(1.0D);
+		hidePasswordlb.setToValue(0.0D);
 		showPasswordr = new FadeTransition(opacityFactor, rPassword);
-		showPasswordr.setFromValue(0);
-		showPasswordr.setToValue(1);
-
+		showPasswordr.setFromValue(0.0D);
+		showPasswordr.setToValue(1.0D);
 		hidePasswordr = new FadeTransition(opacityFactor, rPassword);
-		hidePasswordr.setFromValue(1);
-		hidePasswordr.setToValue(0);
-
+		hidePasswordr.setFromValue(1.0D);
+		hidePasswordr.setToValue(0.0D);
 		showWelcome = new FadeTransition(opacityFactor, lbWelcome);
-		showWelcome.setFromValue(0);
-		showWelcome.setToValue(1);
-
+		showWelcome.setFromValue(0.0D);
+		showWelcome.setToValue(1.0D);
 		showUserdata = new FadeTransition(opacityFactor, lbUserdata);
-		showUserdata.setFromValue(0);
-		showUserdata.setToValue(1);
-
+		showUserdata.setFromValue(0.0D);
+		showUserdata.setToValue(1.0D);
 		hideLogin = new FadeTransition(opacityFactor, login);
-		hideLogin.setFromValue(1);
-		hideLogin.setToValue(0);
-
+		hideLogin.setFromValue(1.0D);
+		hideLogin.setToValue(0.0D);
 		hideCreateaccount = new FadeTransition(opacityFactor, createAccount);
-		hideCreateaccount.setFromValue(1);
-		hideCreateaccount.setToValue(0);
-
+		hideCreateaccount.setFromValue(1.0D);
+		hideCreateaccount.setToValue(0.0D);
 		hideLogo = new FadeTransition(opacityFactor, paneLogo);
-		hideLogo.setFromValue(1);
-		hideLogo.setToValue(0);
+		hideLogo.setFromValue(1.0D);
+		hideLogo.setToValue(0.0D);
 	}
 
 	public void rollbackAnims() {
-
 		failCollapse.play();
 		hideFail.play();
 		usernameToGrey.play();
 		passwordToGrey.play();
-
 		failControl = false;
-
 	}
-
 }
+

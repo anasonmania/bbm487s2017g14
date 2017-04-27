@@ -20,5 +20,4 @@ public class DbProperties {
 	public static final String username = "root";
 	public static final String password = "admin";
 	public static final String port = "3306";
-
 }

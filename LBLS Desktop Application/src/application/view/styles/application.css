@@ -36,11 +36,20 @@
 	-fx-background-repeat: no-repeat;
 }
 
+.icon-tick{
+	-fx-background-image: url("../../../../resources/images/icon_tick.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center top;
+	-fx-background-repeat: no-repeat;
+}
+
+
 /************************************
  * 									*
  * 	Button Styles
  * 									*
  ***********************************/
+
 
 .button-grey{
 	-fx-background-color: #727986;
@@ -57,13 +66,7 @@
 
 .button-grey:hover{
 	-fx-background-color: #5d636e;
-	-fx-background-radius: 30.0;
-	-fx-text-fill: #ffffff;
-	-fx-pref-width: 480.0;
-	-fx-pref-height: 60.0;
-	-fx-font-size: 18.0;
-	-fx-font-family: Roboto;
-	-fx-font-weight: BOLD;
+
 }
 
 .button-green{
@@ -80,13 +83,45 @@
 
 .button-green:hover{
 	-fx-background-color: #3c9e4c;
-	-fx-background-radius: 30.0;
-	-fx-text-fill: #ffffff;
-	-fx-pref-width: 480.0;
-	-fx-pref-height: 60.0;
-	-fx-font-size: 18.0;
+
+}
+.toggle-button{
+	-fx-pref-width: 180;
+	-fx-pref-height: 36;
+	-fx-graphic : url("../../../../resources/images/checkbox_off.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+	-fx-opacity: 0.5;
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 0;
+	-fx-border-color: #727986;
+	-fx-border-width: 1;
+	-fx-border-radius: 0;
 	-fx-font-family: Roboto;
+	-fx-font-size: 13.0;
+	-fx-text-fill: #858c99;
 	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
+}
+.toggle-button:selected{
+	-fx-pref-width: 180;
+	-fx-pref-height: 36;
+	-fx-graphic : url("../../../../resources/images/checkbox_on.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+	-fx-opacity: 1.0;
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 0;
+	-fx-border-color: #46b859;
+	-fx-border-width: 1;
+	-fx-border-radius: 0;
+	-fx-font-family: Roboto;
+	-fx-font-size: 13.0;
+	-fx-text-fill: #46b859;
+	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
 }
 
 .button-back{
@@ -96,7 +131,7 @@
 	-fx-background-color: TRANSPARENT;
 	-fx-background-position: center center;
 	-fx-background-repeat: no-repeat;
-
+	-fx-opacity: 0.5;
 	-fx-background-color: TRANSPARENT;
 	-fx-background-radius: 24;
 	-fx-border-color: #c1c3c9;
@@ -107,6 +142,7 @@
 .button-back:hover{
 	-fx-pref-width: 144;
 	-fx-pref-height: 48;
+	-fx-opacity: 1.0;
 	-fx-background-image: url("../../../../resources/images/icon_back.png");
 	-fx-background-color: TRANSPARENT;
 	-fx-background-position: center center;
@@ -207,10 +243,50 @@
 	-fx-background-color: TRANSPARENT;
 	-fx-background-radius: 6.0;
 	-fx-pref-width: 360.0;
-	-fx-pref-height: 36.0;
+	-fx-pref-height: 32.0;
 	-fx-max-width: 360.0;
 	-fx-max-height: 36.0;
-	-fx-font-size: 18.0;
+	-fx-font-size: 12.0;
+	-fx-font-family: Roboto;
+	-fx-highlight-fill: #727986;
+}
+
+.text-area{
+	-fx-background-color: TRANSPARENT;
+	-fx-border-color: #727986;
+	-fx-border-width: 1;
+	-fx-border-radius: 6;
+	-fx-pref-width: 600.0;
+	-fx-pref-height: 120.0;
+	-fx-max-width: 600.0;
+	-fx-max-height: 120.0;
+	-fx-highlight-fill: #727986;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-hbar-policy : never;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+    -fx-hbar-policy : never;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+    -fx-hbar-policy : never;
+}
+
+.text-field-small {
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 6.0;
+	-fx-pref-width: 300.0;
+	-fx-pref-height: 36.0;
+	-fx-max-width: 300.0;
+	-fx-max-height: 36.0;
+	-fx-font-size: 12.0;
 	-fx-font-family: Roboto;
 }
 
@@ -257,11 +333,59 @@
  ***********************************/
 
 .icon-create-user{
-	-fx-pref-width: 48.0;
-	-fx-pref-height: 48.0;
-	-fx-max-width: 48.0;
-	-fx-max-height: 48.0;
+	-fx-pref-width: 32.0;
+	-fx-pref-height: 32.0;
+	-fx-max-width: 32.0;
+	-fx-max-height: 32.0;
 	-fx-background-image: url("../../../../resources/images/icon_adduser.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+
+}
+
+.icon-add-customer{
+	-fx-pref-width: 32.0;
+	-fx-pref-height: 32.0;
+	-fx-max-width: 32.0;
+	-fx-max-height: 32.0;
+	-fx-background-image: url("../../../../resources/images/icon_addcustomer_header.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+
+}
+
+.icon-edit-customer{
+	-fx-pref-width: 32.0;
+	-fx-pref-height: 32.0;
+	-fx-max-width: 32.0;
+	-fx-max-height: 32.0;
+	-fx-background-image: url("../../../../resources/images/icon_editcustomer_header.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+
+}
+
+.icon-add-book{
+	-fx-pref-width: 32.0;
+	-fx-pref-height: 32.0;
+	-fx-max-width: 32.0;
+	-fx-max-height: 32.0;
+	-fx-background-image: url("../../../../resources/images/icon_addbook_header.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+
+}
+
+.icon-edit-book{
+	-fx-pref-width: 32.0;
+	-fx-pref-height: 32.0;
+	-fx-max-width: 32.0;
+	-fx-max-height: 32.0;
+	-fx-background-image: url("../../../../resources/images/icon_editbook_header.png");
 	-fx-background-color: TRANSPARENT;
 	-fx-background-position: center center;
 	-fx-background-repeat: no-repeat;
@@ -292,6 +416,41 @@
 .date-picker .cell:hover{
 	-fx-background-color: red;
 }
+
+/************************************
+ * 									*
+ * 	Image views
+ * 									*
+ ***********************************/
+.book-image {
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 240.0;
+	-fx-max-width: 180.0;
+	-fx-max-height: 240.0;
+	-fx-background-image: url("../../../../resources/images/icon_image.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-radius: 12.0;
+	-fx-border-color: #c7c9cf;
+	-fx-border-width: 1.0;
+}
+
+.book-image-square {
+	-fx-pref-width: 160.0;
+	-fx-pref-height: 160.0;
+	-fx-max-width: 160.0;
+	-fx-max-height: 160.0;
+	-fx-background-image: url("../../../../resources/images/icon_image.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-radius: 12.0;
+	-fx-border-color: #c7c9cf;
+	-fx-border-width: 1.0;
+}
+
+
 
 
 
