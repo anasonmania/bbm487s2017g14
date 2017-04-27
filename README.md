@@ -8,10 +8,14 @@ Library Book Loan System desktop application for BBM487 Software Engineering Lab
 | 20926046      | Rıdvan Altunel  | Project Manager & Developer |
 | 21228731      | Mahmut Tekinyer |   Analyst & Technical Writer |
 | 21327618      | Ayşe Akcan      |   Architecht & Tester |
+| 21228175      | Ahmet Çalışkan      |   Technical Writer & Tester |
 
 
 ## Geçici not
 Demo'da sunduğumuz proje dosyalarını commitlerken fazla dosya biriktiği için bir takılma yaşadık, discard reset yaptığımızda da localdeki projeyi remote'daki son hale çevirdi kodları geri getirmeye çalışıyoruz. bin klasörüne dokunmadığı için .class dosyaları mevcut, onları bir şekilde decompile edip çalışabilir hale getirdiğimizde kaynak kodları hızlı bir şekilde buraya commitleyeceğiz..
+
+edit:
+27.04.2017 - decompile ve editleme tamamlandı, proje kaynak kodu demo2 sunumu haline çevrildi. 
 
 ## Academic Integrity
 
