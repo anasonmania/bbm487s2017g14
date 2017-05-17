@@ -1,0 +1,191 @@
+package application.model;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+
+import javax.imageio.ImageIO;
+
+import application.Main;
+import application.controller.DBFormatController;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+
+public class User {
+	private String username;
+	private String password;
+	private String email;
+	private String name;
+	private String surname;
+	private String phoneNumber;
+	private LocalDate birthDate;
+	private int userId;
+	private int schoolNumber;
+	private int islibrarian;
+	private Image profilePic;
+	private Image profilePicThumb;
+
+	public User(String username, String password, String email, String name, String surname, String phoneNumber, LocalDate birthDate,
+			int userId, int schoolNumber, Image profilePic, int islibrarian) {
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.name = name;
+		this.surname = surname;
+		this.phoneNumber = phoneNumber;
+		this.birthDate = birthDate;
+		this.userId = userId;
+		this.schoolNumber = schoolNumber;
+		this.profilePic = profilePic;
+		this.islibrarian = islibrarian;
+	}
+
+	public void logout() {
+		this.username = "";
+		this.email = "";
+		this.name = "";
+		this.surname = "";
+		this.phoneNumber = "";
+		this.birthDate = null;
+		this.userId = -1;
+		this.schoolNumber = 0;
+		this.islibrarian = 0;
+		this.profilePic = null;
+		this.password = null;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return this.surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getPhoneNumber() {
+		return this.phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public LocalDate getBirthDate() {
+		return this.birthDate;
+	}
+
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public int getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public int getSchoolNumber() {
+		return this.schoolNumber;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setSchoolNumber(int schoolNumber) {
+		this.schoolNumber = schoolNumber;
+	}
+
+	public int getIslibrarian() {
+		return this.islibrarian;
+	}
+
+	public void setIslibrarian(int islibrarian) {
+		this.islibrarian = islibrarian;
+	}
+
+	public Image getProfilePic() {
+		return this.profilePic;
+	}
+
+	public void setProfilePic(Image profilePic) {
+		this.profilePic = profilePic;
+	}
+
+	public void setThumb(Image profilePicThumb){
+		this.profilePicThumb = profilePicThumb;
+	}
+
+	public Image getThumb(){
+		return this.profilePicThumb;
+	}
+
+	public void updateCurrentUser(String username) throws SQLException, IOException{
+
+		PreparedStatement statement = Main.con.prepareStatement("SELECT * from user WHERE username = \'" + username + "\' ");
+		ResultSet result = statement.executeQuery();
+		WritableImage profilePic;
+		while (result.next()) {
+			byte[] imgBuf = result.getBytes("profilepic");
+
+			if (imgBuf != null) {
+				ByteArrayInputStream in = new ByteArrayInputStream(imgBuf);
+				BufferedImage bufferedImage = ImageIO.read(in);
+
+				profilePic = SwingFXUtils.toFXImage(bufferedImage, (WritableImage) null);
+			} else {
+				profilePic = null;
+			}
+
+			if (result.getDate("birthdate") == null) {
+
+				Main.currentUser = new User(result.getString("username"), result.getString("password"),
+						result.getString("email"), result.getString("name"), result.getString("surname"),
+						result.getString("phonenumber"), (LocalDate) null, result.getInt("iduserinfo"),
+						result.getInt("schoolnumber"), (Image) profilePic, result.getInt("islibrarian"));
+			} else {
+				Main.currentUser = new User(result.getString("username"), result.getString("password"),
+						result.getString("email"), result.getString("name"), result.getString("surname"),
+						result.getString("phonenumber"), DBFormatController.dateToJava(result.getDate("birthdate")),
+						result.getInt("iduserinfo"), result.getInt("schoolnumber"), (Image) profilePic,
+						result.getInt("islibrarian"));
+			}
+
+		}
+	}
+}

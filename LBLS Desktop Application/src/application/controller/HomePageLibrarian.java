@@ -1,10 +1,11 @@
 package application.controller;
 
-import application.Main;
-import application.controller.AnimationFabric;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import application.Main;
 import javafx.animation.FadeTransition;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -19,6 +20,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -28,6 +31,7 @@ public class HomePageLibrarian implements Initializable {
 	public GridPane lnSearch;
 	public Label lbName;
 	public Label lbSchoolidentity;
+	public Circle ppUser;
 	public Button btnGrid1;
 	public Button btnGrid2;
 	public Button btnGrid3;
@@ -36,21 +40,35 @@ public class HomePageLibrarian implements Initializable {
 	public GridPane paneSearch;
 	public GridPane paneHeader;
 	public Rectangle rSearch;
-	private FadeTransition showHeader;
 	private FadeTransition hideHeader;
 	private FadeTransition showButtons;
 	private FadeTransition hideButtons;
 	private FadeTransition showSearch;
 	private FadeTransition hideSearch;
-	private Duration opacityFactor = Duration.millis(1000.0D);
+	private Duration opacityFactor = Duration.millis(1000.0d);
 
 	public void initialize(URL location, ResourceBundle resources) {
-		this.rSearch.setOpacity(0.4D);
+
+		try {
+			Main.currentUser.updateCurrentUser(Main.currentUser.getUsername());
+		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.rSearch.setOpacity(0.4d);
 		this.tfSearch.setPromptText("Search books");
 		this.lbName.setText(Main.currentUser.getName() + " " + Main.currentUser.getSurname());
 		this.lbSchoolidentity.setText(Integer.toString(Main.currentUser.getSchoolNumber()));
+		if(Main.currentUser.getProfilePic()==null){
+
+			ppUser.setFill(new ImagePattern(Main.defaultPP));
+		}
+		else {
+			ppUser.setFill(new ImagePattern(Main.currentUser.getProfilePic()));
+		}
+
 		this.setOpacityAnims();
-		this.paneHeader.setOpacity(1.0D);
+		this.paneHeader.setOpacity(1.0d);
 		this.showButtons.play();
 		this.showSearch.play();
 	}
@@ -134,6 +152,33 @@ public class HomePageLibrarian implements Initializable {
         new Thread(sleeper).start();
 	}
 
+	public void editBook(ActionEvent event) throws IOException {
+		this.hideSearch.play();
+		this.hideButtons.play();
+		Parent newParent = (Parent) FXMLLoader.load(this.getClass().getResource("../view/L4EditBook.fxml"));
+		final Scene newScreen = new Scene(newParent);
+		final Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Thread.sleep((long) opacityFactor.toMillis()/4);
+                } catch (InterruptedException e) {
+                }
+                return null;
+            }
+        };
+        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+            	appStage.setScene(newScreen);
+        		appStage.show();
+            }
+        });
+        new Thread(sleeper).start();
+	}
+
+
 	public void logout(ActionEvent event) throws IOException {
 		Main.currentUser.logout();
 		this.hideSearch.play();
@@ -164,23 +209,22 @@ public class HomePageLibrarian implements Initializable {
 	}
 
 	public void lineSearch() {
-		this.rSearch.setOpacity(1.0D);
+		this.rSearch.setOpacity(1.0d);
 	}
 
 	public void setOpacityAnims() {
-		this.showButtons = new FadeTransition(this.opacityFactor.multiply(2.0D), this.paneButtons);
-		this.showButtons.setFromValue(0.0D);
-		this.showButtons.setToValue(1.0D);
-		this.hideButtons = new FadeTransition(this.opacityFactor.divide(2.0D), this.paneButtons);
-		this.hideButtons.setFromValue(1.0D);
-		this.hideButtons.setToValue(0.0D);
+		this.showButtons = new FadeTransition(this.opacityFactor.multiply(2.0d), this.paneButtons);
+		this.showButtons.setFromValue(0.0d);
+		this.showButtons.setToValue(1.0d);
+		this.hideButtons = new FadeTransition(this.opacityFactor.divide(2.0d), this.paneButtons);
+		this.hideButtons.setFromValue(1.0d);
+		this.hideButtons.setToValue(0.0d);
 		this.showSearch = new FadeTransition(this.opacityFactor, this.paneSearch);
-		this.showSearch.setFromValue(0.0D);
-		this.showSearch.setToValue(1.0D);
+		this.showSearch.setFromValue(0.0d);
+		this.showSearch.setToValue(1.0d);
 		this.hideSearch = new FadeTransition(this.opacityFactor, this.paneSearch);
-		this.hideSearch.setFromValue(1.0D);
-		this.hideSearch.setToValue(0.0D);
-		this.showHeader = AnimationFabric.createOpacityAnim(this.paneHeader, 0.0D, 1.0D, this.opacityFactor);
-		this.hideHeader = AnimationFabric.createOpacityAnim(this.paneHeader, 1.0D, 0.0D, this.opacityFactor);
+		this.hideSearch.setFromValue(1.0d);
+		this.hideSearch.setToValue(0.0d);
+		this.hideHeader = AnimationFabric.createOpacityAnim(this.paneHeader, 1.0d, 0.0d, this.opacityFactor);
 	}
 }

@@ -231,7 +231,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#addNewUser" styleClass="button-green" text="Add Book" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" onAction="#addNewUser" styleClass="button-green" text="Add User" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label styleClass="text-xsmall" text="© Group 14 , 2017" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="10.0" />

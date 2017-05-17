@@ -16,9 +16,9 @@
 
 
 .table-view .column-header-background{
-    -fx-background-color:  rgba(255,255,255,0.6);
-    -fx-background-radius: 12 12 0 0;
-    -fx-border-radius:  12 12 0 0;
+    -fx-background-color:  rgba(255,255,255,0.2);
+    -fx-background-radius: 0 0 0 0;
+    -fx-border-radius:  0 0 0 0;
     -fx-border-color: #c6c8ce;
    -fx-border-width: 1 1 1 1;
 }
@@ -29,13 +29,12 @@
 	-fx-font-size: 16.0;
 	-fx-text-fill: #727986;
 	-fx-font-weight: BOLD;
-	-fx-font-smoothing-type: gray;
 }
 
 .table-view .column-header {
     -fx-background-color: transparent;
-    -fx-pref-height: 48.0;
-    -fx-max-height: 48.0;
+    -fx-pref-height: 40.0;
+    -fx-max-height: 40.0;
     -fx-background-radius: 12px;
 
 }
@@ -74,8 +73,8 @@
 
 .table-row-cell:selected {
 
-	-fx-pref-height: 48.0;
-    -fx-max-height: 48.0;
+	-fx-pref-height: 40.0;
+    -fx-max-height: 40.0;
     -fx-background-color: rgba(255,255,255,0.6);
     -fx-background-insets: 0;
     -fx-background-radius: 1;

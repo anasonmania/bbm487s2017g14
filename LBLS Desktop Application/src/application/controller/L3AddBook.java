@@ -43,15 +43,19 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
+@SuppressWarnings("restriction")
 public class L3AddBook implements Initializable {
 	public GridPane paneHeader;
 	public GridPane paneContent;
@@ -77,13 +81,13 @@ public class L3AddBook implements Initializable {
 	private FadeTransition hideContent;
 	private FadeTransition showBottom;
 	private FadeTransition hideBottom;
-	private Duration opacityFactor = Duration.millis(1000.0D);
+	private Duration opacityFactor = Duration.millis(1000.0d);
 	int checkDesStart;
 	int remainChar;
 
 	public void initialize(URL location, ResourceBundle resources) {
 
-		taDescription.setOpacity(0.4D);
+		taDescription.setOpacity(0.4d);
 		taDescription.setTextFormatter(new TextFormatter<String>(change ->
 			change.getControlNewText().length() <= 500 ? change : null
 		));
@@ -95,9 +99,9 @@ public class L3AddBook implements Initializable {
 		imageLoaded = false;
 	}
 
-	public void addNewBook(ActionEvent event) throws FileNotFoundException, SQLException {
+	public void addNewBook(ActionEvent event) throws SQLException, IOException {
 		HashSet<Integer> ids = new HashSet<Integer>();
-		PreparedStatement idsQuery = Main.con.prepareStatement("SELECT idbook FROM book ");
+		PreparedStatement idsQuery = Main.con.prepareStatement("SELECT id FROM book ");
 		ResultSet result = idsQuery.executeQuery();
 
 		while (result.next()) {
@@ -106,9 +110,9 @@ public class L3AddBook implements Initializable {
 
 		Random generator = new Random();
 
-		int idbook;
-		for (idbook = generator.nextInt(99999999) + 1; ids
-				.contains(Integer.valueOf(idbook)); idbook = generator.nextInt(99999999) + 1) {
+		int id;
+		for (id = generator.nextInt(99999999) + 1; ids
+				.contains(Integer.valueOf(id)); id = generator.nextInt(99999999) + 1) {
 			;
 		}
 
@@ -116,6 +120,9 @@ public class L3AddBook implements Initializable {
 		String author = tfAuthor.getText();
 		String publisher = tfPublisher.getText();
 		String description = taDescription.getText();
+
+		description = description.replace("\n", "");
+
 		boolean isAvailable;
 		if (btnAvailable.isSelected()) {
 			isAvailable = true;
@@ -128,8 +135,8 @@ public class L3AddBook implements Initializable {
 		if (imageLoaded) {
 			FileInputStream insBook = new FileInputStream(imageFile.getPath());
 			statement = Main.con.prepareStatement(
-					"INSERT INTO book (`idbook`, `isbn`, `name`, `author`, `publisher`, `description`, `isavailable`, `image`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-			statement.setInt(1, idbook);
+					"INSERT INTO book (`id`, `isbn`, `name`, `author`, `publisher`, `description`, `isavailable`, `image`, `owner`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			statement.setInt(1, id);
 			if (!tfIsbn.getText().equals("")) {
 				isbn = Integer.parseInt(tfIsbn.getText());
 				statement.setInt(2, isbn);
@@ -141,12 +148,13 @@ public class L3AddBook implements Initializable {
 			statement.setString(6, description);
 			statement.setBoolean(7, isAvailable);
 			statement.setBlob(8, insBook);
+			statement.setInt(9, -1);
 			statement.executeUpdate();
 			System.out.println("with photo");
 		} else {
 			statement = Main.con.prepareStatement(
-					"INSERT INTO book (`idbook`, `isbn`, `name`, `author`, `publisher`, `description`, `isavailable`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-			statement.setInt(1, idbook);
+					"INSERT INTO book (`id`, `isbn`, `name`, `author`, `publisher`, `description`, `isavailable`,`owner`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+			statement.setInt(1, id);
 			if (!tfIsbn.getText().equals("")) {
 				isbn = Integer.parseInt(tfIsbn.getText());
 				statement.setInt(2, isbn);
@@ -157,9 +165,18 @@ public class L3AddBook implements Initializable {
 			statement.setString(5, publisher);
 			statement.setString(6, description);
 			statement.setBoolean(7, isAvailable);
+			statement.setInt(8, -1);
 			statement.executeUpdate();
 			System.out.println("nonphoto");
 		}
+
+		BorderPane borrowPane = (BorderPane) FXMLLoader.load(this.getClass().getResource("../view/DialogSuccess.fxml"));
+		Scene borrowDialog = new Scene(borrowPane, 560, 240);
+		Stage borrowStage = new Stage();
+		borrowStage.setScene(borrowDialog);
+		borrowStage.initStyle(StageStyle.UNDECORATED);
+		borrowStage.initModality(Modality.APPLICATION_MODAL);
+		borrowStage.showAndWait();
 
 	}
 
@@ -201,16 +218,16 @@ public class L3AddBook implements Initializable {
 	}
 
 	public void setOpacityAnims() {
-		showHeader = AnimationFabric.createOpacityAnim(paneHeader, 0.0D, 1.0D,
-				opacityFactor.divide(2.0D));
-		showContent = AnimationFabric.createOpacityAnim(paneContent, 0.0D, 1.0D, opacityFactor);
-		showBottom = AnimationFabric.createOpacityAnim(paneBottom, 0.0D, 1.0D,
-				opacityFactor.multiply(2.0D));
-		hideHeader = AnimationFabric.createOpacityAnim(paneHeader, 1.0D, 0.0D,
-				opacityFactor.multiply(2.0D));
-		hideContent = AnimationFabric.createOpacityAnim(paneContent, 1.0D, 0.0D, opacityFactor);
-		hideBottom = AnimationFabric.createOpacityAnim(paneBottom, 1.0D, 0.0D,
-				opacityFactor.divide(2.0D));
+		showHeader = AnimationFabric.createOpacityAnim(paneHeader, 0.0d, 1.0d,
+				opacityFactor.divide(2.0d));
+		showContent = AnimationFabric.createOpacityAnim(paneContent, 0.0d, 1.0d, opacityFactor);
+		showBottom = AnimationFabric.createOpacityAnim(paneBottom, 0.0d, 1.0d,
+				opacityFactor.multiply(2.0d));
+		hideHeader = AnimationFabric.createOpacityAnim(paneHeader, 1.0d, 0.0d,
+				opacityFactor.multiply(2.0d));
+		hideContent = AnimationFabric.createOpacityAnim(paneContent, 1.0d, 0.0d, opacityFactor);
+		hideBottom = AnimationFabric.createOpacityAnim(paneBottom, 1.0d, 0.0d,
+				opacityFactor.divide(2.0d));
 	}
 
 	public void handleAvailable(ActionEvent event) {
@@ -232,6 +249,7 @@ public class L3AddBook implements Initializable {
 		System.out.println("imagefield clicked");
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", extensions));
+		fileChooser.setInitialDirectory(Main.booksDir);
 		imageFile = fileChooser.showOpenDialog((Window) null);
 		if (imageFile != null) {
 			System.out.println(imageFile.getName());
@@ -246,7 +264,7 @@ public class L3AddBook implements Initializable {
 			Background bgBook = new Background(new BackgroundImage[] { bgImgBook });
 			imageBook.setBackground(bgBook);
 			imageLoaded = true;
-			imageBook.setOpacity(1.0D);
+			imageBook.setOpacity(1.0d);
 		} catch (IOException arg5) {
 			System.out.println("There is a problem with file");
 		}
@@ -254,28 +272,27 @@ public class L3AddBook implements Initializable {
 	}
 
 	public void incImagefield() {
-		imageBook.setOpacity(1.0D);
+		imageBook.setOpacity(1.0d);
 	}
 
 	public void decImagefield() {
 		if (!imageLoaded) {
-			imageBook.setOpacity(0.4D);
+			imageBook.setOpacity(0.4d);
 		}
 
 	}
 
-	@SuppressWarnings("restriction")
 	public void handleDescription() {
-		taDescription.setOpacity(1.0D);
+		taDescription.setOpacity(1.0d);
 
 		FontMetrics fontMetrics = Toolkit.getToolkit().getFontLoader().getFontMetrics(taDescription.getFont());
-		double inputWidth = 0.0D;
+		double inputWidth = 0.0d;
 		if (checkDesStart < taDescription.getText().length()) {
 			inputWidth = (double) fontMetrics.computeStringWidth(
 					taDescription.getText(checkDesStart, taDescription.getText().length()));
 		}
 
-		if (inputWidth >= 580.0D) {
+		if (inputWidth >= 580.0d) {
 			taDescription.appendText("\n");
 			checkDesStart = taDescription.getText().length() - 1;
 		}
@@ -285,18 +302,18 @@ public class L3AddBook implements Initializable {
 	}
 
 	public void lineIsbn() {
-		rIsbn.setOpacity(1.0D);
+		rIsbn.setOpacity(1.0d);
 	}
 
 	public void linePublisher() {
-		rPublisher.setOpacity(1.0D);
+		rPublisher.setOpacity(1.0d);
 	}
 
 	public void lineName() {
-		rName.setOpacity(1.0D);
+		rName.setOpacity(1.0d);
 	}
 
 	public void lineAuthor() {
-		rAuthor.setOpacity(1.0D);
+		rAuthor.setOpacity(1.0d);
 	}
 }

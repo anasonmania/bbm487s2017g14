@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
@@ -40,6 +41,11 @@
                         <Insets top="30.0" />
                      </padding>
                   </Label>
+                  <Circle fx:id="ppUser" fill="DODGERBLUE" radius="24.0" stroke="TRANSPARENT" strokeType="INSIDE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets left="16.0" />
+                     </GridPane.margin>
+                  </Circle>
                </children>
             </GridPane>
             <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#logout" styleClass="button-logout" text="LOGOUT" GridPane.columnIndex="2" />
@@ -66,19 +72,28 @@
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button contentDisplay="TOP" mnemonicParsing="false" styleClass="button-grid-1" text="Loan Book" textOverrun="CLIP" />
-                  <Button contentDisplay="TOP" mnemonicParsing="false" styleClass="button-grid-1" text="Button" GridPane.columnIndex="1" />
-                  <Button contentDisplay="TOP" mnemonicParsing="false" styleClass="button-grid-1" text="Button" GridPane.columnIndex="2" />
-                  <Button contentDisplay="TOP" mnemonicParsing="false" styleClass="button-grid-1" text="Button" GridPane.rowIndex="1" />
-                  <Button contentDisplay="TOP" mnemonicParsing="false" styleClass="button-grid-1" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button contentDisplay="TOP" mnemonicParsing="false" styleClass="button-grid-1" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="btnGrid1" contentDisplay="TOP" mnemonicParsing="false" onAction="#library" styleClass="button-grid-library" text="Library" textOverrun="CLIP" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets bottom="20.0" right="20.0" />
+                     </GridPane.margin></Button>
+                  <Button fx:id="btnGrid3" contentDisplay="TOP" mnemonicParsing="false" onAction="#reservations" styleClass="button-grid-reservation" text="Reservation" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets right="20.0" top="20.0" />
+                     </GridPane.margin></Button>
+                  <Button fx:id="btnGrid4" contentDisplay="TOP" mnemonicParsing="false" onAction="#myBooks" styleClass="button-grid-mybooks" text="My Books" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets bottom="20.0" left="20.0" />
+                     </GridPane.margin></Button>
+                  <Button fx:id="btnGrid6" contentDisplay="TOP" mnemonicParsing="false" onAction="#settings" styleClass="button-grid-settings" text="Settings" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="20.0" top="20.0" />
+                     </GridPane.margin></Button>
                </children>
             </GridPane>
             <GridPane alignment="CENTER">
@@ -94,7 +109,8 @@
                <children>
                   <TextField fx:id="tfSearch" onKeyTyped="#lineSearch" prefHeight="34.0" prefWidth="449.0" styleClass="text-field-wide" GridPane.valignment="BOTTOM" />
                   <GridPane fx:id="lnSearch" styleClass="text-line-wide" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-                  <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="47.0" prefWidth="143.0" styleClass="button-search" text="SEARCH" GridPane.columnIndex="1" />
+                  <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleSearch" prefHeight="47.0" prefWidth="143.0" styleClass="button-search" text="SEARCH" GridPane.columnIndex="1" />
+                  <Rectangle fx:id="rSearch" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" width="480.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
                </children>
             </GridPane>
          </children>

@@ -1,0 +1,620 @@
+package application.controller;
+
+import application.Main;
+import application.controller.AnimationFabric;
+import application.controller.DBFormatController;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javafx.animation.FadeTransition;
+import javafx.animation.FillTransition;
+import javafx.animation.Timeline;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Duration;
+import javax.imageio.ImageIO;
+
+public class C4UserSettings implements Initializable {
+	public GridPane paneHeader;
+	public GridPane paneContent;
+	public GridPane paneBottom;
+	public TextField tfUsername;
+	public TextField tfSchoolNumber;
+	public TextField tfEmail;
+	public TextField tfName;
+	public TextField tfSurname;
+	public TextField tfPhoneNumber;
+	public Label warnUsername;
+	public Label warnPassword;
+	public Label warnSchoolnumber;
+	public Label warnEmail;
+	public PasswordField pfPassword;
+	public DatePicker dpBirthday;
+	public Label lbDeslength;
+	public Pane imageUser;
+	public ImageView ivUser;
+
+	private boolean imageLoaded;
+	private BackgroundImage bgImgUser;
+	private Background bgUser;
+	private Image image;
+
+	public Button remove;
+
+	private File imageFile;
+	public Rectangle rUsername;
+	public Rectangle rPassword;
+	public Rectangle rSchoolnumber;
+	public Rectangle rEmail;
+	public Rectangle rName;
+	public Rectangle rSurname;
+	public Rectangle rBirthdate;
+	public Rectangle rPhonenumber;
+	private boolean failControl;
+	private boolean failUsername;
+	private boolean failPassword;
+	private boolean failSchoolnumber;
+	private boolean failEmail;
+	private Timeline tmDown;
+	private Timeline tmUp;
+	private FadeTransition showUsernameWarning;
+	private FadeTransition hideUsernameWarning;
+	private FadeTransition showPasswordWarning;
+	private FadeTransition hidePasswordWarning;
+	private FadeTransition showSchoolnumberWarning;
+	private FadeTransition hideSchoolnumberWarning;
+	private FadeTransition showEmailWarning;
+	private FadeTransition hideEmailWarning;
+	private FadeTransition showContent;
+	private FadeTransition hideContent;
+	private FadeTransition showHeader;
+	private FadeTransition hideHeader;
+	private FadeTransition showBottom;
+	private FadeTransition hideBottom;
+	private FillTransition usernameToRed;
+	private FillTransition usernameToGrey;
+	private FillTransition passwordToRed;
+	private FillTransition passwordToGrey;
+	private FillTransition schoolnumberToRed;
+	private FillTransition schoolnumberToGrey;
+	private FillTransition emailToRed;
+	private FillTransition emailToGrey;
+	private Duration opacityFactor = Duration.millis(1000.0D);
+	private Pattern pattern;
+	private Matcher matcher;
+	public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	int checkDesStart;
+	int remainChar;
+
+	public void initialize(URL location, ResourceBundle resources) {
+		tfUsername.setText(Main.currentUser.getUsername());
+		tfSchoolNumber.setText(Integer.toString(Main.currentUser.getSchoolNumber()));
+		tfEmail.setText(Main.currentUser.getEmail());
+		tfName.setText(Main.currentUser.getName());
+		tfSurname.setText(Main.currentUser.getSurname());
+		tfPhoneNumber.setText(Main.currentUser.getPhoneNumber());
+		pfPassword.setText("Password");
+		dpBirthday.setPromptText("Date of birth");
+		if (Main.currentUser.getProfilePic() != null) {
+			System.out.println("here");
+			BackgroundImage bgImgUser = new BackgroundImage(Main.currentUser.getProfilePic(),
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+					BackgroundSize.DEFAULT);
+			Background bgUser = new Background(new BackgroundImage[] { bgImgUser });
+			ivUser.setImage(Main.currentUser.getProfilePic());
+
+			imageUser.setBackground(bgUser);
+			remove.setDisable(false);
+		} else {
+			ivUser.setImage(Main.defaultPP);
+			remove.setDisable(true);
+			remove.setOpacity(0);
+		}
+		imageUser.setOpacity(1.0D);
+
+		if (Main.currentUser.getBirthDate() != null) {
+			dpBirthday.setValue(Main.currentUser.getBirthDate());
+		}
+
+		failControl = false;
+		failUsername = false;
+		failPassword = false;
+		failSchoolnumber = false;
+		failEmail = false;
+		imageLoaded = false;
+		pattern = Pattern
+				.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+		setPositionAnims();
+		setColorAnims();
+		setOpacityAnims();
+		showHeader.play();
+		showContent.play();
+		showBottom.play();
+	}
+
+	public void saveUserData(ActionEvent event) throws SQLException, NoSuchAlgorithmException, IOException {
+
+		if (!checkInputs()) {
+			HashSet<Integer> ids = new HashSet<Integer>();
+			PreparedStatement idsQuery = Main.con.prepareStatement("SELECT iduserinfo FROM user ");
+			ResultSet result = idsQuery.executeQuery();
+
+			while (result.next()) {
+				ids.add(Integer.valueOf(Integer.parseInt(result.getString(1))));
+			}
+
+			int schoolnumber;
+			String username;
+			String password;
+			boolean passwordChanged;
+			String email;
+			String name;
+			String surname;
+			String phonenumber;
+			LocalDate birthdate;
+			PreparedStatement statement;
+			if (imageLoaded) {
+				FileInputStream insUser = new FileInputStream(imageFile.getPath());
+				if (pfPassword.getText().equals("Password") || pfPassword.getText().equals(""))
+					passwordChanged = false;
+				else
+					passwordChanged = true;
+
+				if (passwordChanged) {
+					statement = Main.con.prepareStatement(
+							"UPDATE user SET password = ?, email = ?, name = ?, surname = ?, birthdate = ?, phonenumber = ?, profilepic = ? WHERE iduserinfo = ? ");
+					username = tfUsername.getText();
+
+					email = tfEmail.getText();
+					name = tfName.getText();
+					surname = tfSurname.getText();
+					phonenumber = tfPhoneNumber.getText();
+					birthdate = (LocalDate) dpBirthday.getValue();
+					password = DBFormatController.passToDatabase(pfPassword.getText());
+					statement.setString(1, password);
+					statement.setString(2, email);
+					statement.setString(3, name);
+					statement.setString(4, surname);
+					if (birthdate != null) {
+						statement.setDate(5, DBFormatController.dateToDatabase(birthdate));
+					} else {
+						statement.setDate(5, (Date) null);
+					}
+
+					statement.setString(6, phonenumber);
+					statement.setBlob(7, insUser);
+					statement.setInt(8, Main.currentUser.getUserId());
+					statement.executeUpdate();
+				} else {
+					statement = Main.con.prepareStatement(
+							"UPDATE user SET username = ?, schoolnumber = ?, email = ?, name = ?, surname = ?, birthdate = ?, phonenumber = ?, profilepic = ? WHERE iduserinfo = ? ");
+					username = tfUsername.getText();
+
+					if (!tfSchoolNumber.getText().equals("")) {
+						schoolnumber = Integer.parseInt(tfSchoolNumber.getText());
+						statement.setInt(2, schoolnumber);
+					}
+
+					email = tfEmail.getText();
+					name = tfName.getText();
+					surname = tfSurname.getText();
+					phonenumber = tfPhoneNumber.getText();
+					birthdate = (LocalDate) dpBirthday.getValue();
+					statement.setString(1, username);
+					statement.setString(3, email);
+					statement.setString(4, name);
+					statement.setString(5, surname);
+					if (birthdate != null) {
+						statement.setDate(6, DBFormatController.dateToDatabase(birthdate));
+					} else {
+						statement.setDate(6, (Date) null);
+					}
+
+					statement.setString(7, phonenumber);
+					statement.setBlob(8, insUser);
+					statement.setInt(9, Main.currentUser.getUserId());
+					statement.executeUpdate();
+				}
+
+			} else {
+
+				if (pfPassword.getText().equals("Password") || pfPassword.getText().equals(""))
+					passwordChanged = false;
+				else
+					passwordChanged = true;
+
+				if (passwordChanged) {
+					statement = Main.con.prepareStatement(
+							"UPDATE user SET username = ?, password = ?, schoolnumber = ?, email = ?, name = ?, surname = ?, birthdate = ?, phonenumber = ? WHERE iduserinfo = ? ");
+					username = tfUsername.getText();
+					password = DBFormatController.passToDatabase(pfPassword.getText());
+					if (!tfSchoolNumber.getText().equals("")) {
+						schoolnumber = Integer.parseInt(tfSchoolNumber.getText());
+						statement.setInt(3, schoolnumber);
+					}
+
+					email = tfEmail.getText();
+					name = tfName.getText();
+					surname = tfSurname.getText();
+					phonenumber = tfPhoneNumber.getText();
+					birthdate = (LocalDate) dpBirthday.getValue();
+					statement.setString(1, username);
+					statement.setString(2, password);
+					statement.setString(4, email);
+					statement.setString(5, name);
+					statement.setString(6, surname);
+					if (birthdate != null) {
+						statement.setDate(7, DBFormatController.dateToDatabase(birthdate));
+					} else {
+						statement.setDate(7, (Date) null);
+					}
+
+					statement.setString(8, phonenumber);
+					statement.setInt(9, Main.currentUser.getUserId());
+					statement.executeUpdate();
+				} else {
+					statement = Main.con.prepareStatement(
+							"UPDATE user SET username = ?, schoolnumber = ?, email = ?, name = ?, surname = ?, birthdate = ?, phonenumber = ? WHERE iduserinfo = ? ");
+					username = tfUsername.getText();
+					if (!tfSchoolNumber.getText().equals("")) {
+						schoolnumber = Integer.parseInt(tfSchoolNumber.getText());
+						statement.setInt(2, schoolnumber);
+					}
+
+					email = tfEmail.getText();
+					name = tfName.getText();
+					surname = tfSurname.getText();
+					phonenumber = tfPhoneNumber.getText();
+					birthdate = (LocalDate) dpBirthday.getValue();
+					statement.setString(1, username);
+					statement.setString(3, email);
+					statement.setString(4, name);
+					statement.setString(5, surname);
+					if (birthdate != null) {
+						statement.setDate(6, DBFormatController.dateToDatabase(birthdate));
+					} else {
+						statement.setDate(6, (Date) null);
+					}
+
+					statement.setString(7, phonenumber);
+					statement.setInt(8, Main.currentUser.getUserId());
+					statement.executeUpdate();
+				}
+			}
+
+		}
+		Main.currentUser.updateCurrentUser(Main.currentUser.getUsername());
+	}
+
+	public void setOpacityAnims() {
+		showHeader = AnimationFabric.createOpacityAnim(paneHeader, 0.0D, 1.0D, opacityFactor.divide(2.0D));
+		showContent = AnimationFabric.createOpacityAnim(paneContent, 0.0D, 1.0D, opacityFactor);
+		showBottom = AnimationFabric.createOpacityAnim(paneBottom, 0.0D, 1.0D, opacityFactor.multiply(2.0D));
+		hideHeader = AnimationFabric.createOpacityAnim(paneHeader, 1.0D, 0.0D, opacityFactor.multiply(2.0D));
+		hideContent = AnimationFabric.createOpacityAnim(paneContent, 1.0D, 0.0D, opacityFactor);
+		hideBottom = AnimationFabric.createOpacityAnim(paneBottom, 1.0D, 0.0D, opacityFactor.divide(2.0D));
+		showUsernameWarning = AnimationFabric.createOpacityAnim(warnUsername, 0.0D, 1.0D, opacityFactor);
+		hideUsernameWarning = AnimationFabric.createOpacityAnim(warnUsername, 1.0D, 0.0D, opacityFactor);
+		showPasswordWarning = AnimationFabric.createOpacityAnim(warnPassword, 0.0D, 1.0D, opacityFactor);
+		hidePasswordWarning = AnimationFabric.createOpacityAnim(warnPassword, 1.0D, 0.0D, opacityFactor);
+		showSchoolnumberWarning = AnimationFabric.createOpacityAnim(warnSchoolnumber, 0.0D, 1.0D, opacityFactor);
+		hideSchoolnumberWarning = AnimationFabric.createOpacityAnim(warnSchoolnumber, 1.0D, 0.0D, opacityFactor);
+		showEmailWarning = AnimationFabric.createOpacityAnim(warnEmail, 0.0D, 1.0D, opacityFactor);
+		hideEmailWarning = AnimationFabric.createOpacityAnim(warnEmail, 1.0D, 0.0D, opacityFactor);
+	}
+
+	public void selectImage() {
+		LinkedList<String> extensions = new LinkedList<String>();
+		extensions.add("*.jpg");
+		extensions.add("*.png");
+		extensions.add("*.jpeg");
+		extensions.add("*.gif");
+		System.out.println("imagefield clicked");
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", extensions));
+		imageFile = fileChooser.showOpenDialog((Window) null);
+		if (imageFile != null) {
+			System.out.println(imageFile.getName());
+			remove.setDisable(false);
+			remove.setOpacity(1);
+		}
+
+		try {
+			BufferedImage ex = ImageIO.read(imageFile);
+			System.out.println(ex.getWidth() + " " + ex.getHeight());
+			image = SwingFXUtils.toFXImage(ex, (WritableImage) null);
+			bgImgUser = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+					BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+			bgUser = new Background(new BackgroundImage[] { bgImgUser });
+			imageUser.setBackground(bgUser);
+			ivUser.setImage(image);
+			imageLoaded = true;
+			imageUser.setOpacity(1.0D);
+		} catch (IOException arg3) {
+			System.out.println("There is a problem with file");
+		}
+
+	}
+
+	private boolean checkInputs() throws SQLException {
+		if (tfUsername.getText().equals("")) {
+			warnUsername.setText("Please enter a username");
+			usernameToRed.play();
+			showUsernameWarning.play();
+			failUsername = true;
+			failControl = true;
+		}
+
+		if (pfPassword.getText().equals("")) {
+			warnPassword.setText("Please enter a password");
+			passwordToRed.play();
+			showPasswordWarning.play();
+			failPassword = true;
+			failControl = true;
+		}
+
+		if (tfSchoolNumber.getText().equals("")) {
+			warnSchoolnumber.setText("Please enter a schoolnumber");
+			schoolnumberToRed.play();
+			showSchoolnumberWarning.play();
+			failSchoolnumber = true;
+			failControl = true;
+		}
+
+		if (tfEmail.getText().equals("")) {
+			warnEmail.setText("Please enter an e-mail adress");
+			emailToRed.play();
+			showEmailWarning.play();
+			failEmail = true;
+			failControl = true;
+		} else {
+			matcher = pattern.matcher(tfEmail.getText());
+			if (!matcher.matches()) {
+				warnEmail.setText("E-mail is not valid formatted");
+				emailToRed.play();
+				showEmailWarning.play();
+				failEmail = true;
+				failControl = true;
+			}
+		}
+
+		if (failControl) {
+			tmDown.play();
+		}
+
+		return failControl;
+	}
+
+	public void incImagefield() {
+		imageUser.setOpacity(1.0D);
+	}
+
+	public void decImagefield() {
+		if (!imageLoaded) {
+			imageUser.setOpacity(0.4D);
+		}
+
+	}
+
+	public void logout(ActionEvent event) throws IOException {
+		Main.currentUser.logout();
+		hideHeader.play();
+		hideContent.play();
+		hideBottom.play();
+		Parent newParent = (Parent) FXMLLoader.load(getClass().getResource("../view/Login.fxml"));
+		final Scene newScreen = new Scene(newParent);
+		final Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Task<Void> sleeper = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					Thread.sleep((long) opacityFactor.toMillis() / 2);
+				} catch (InterruptedException e) {
+				}
+				return null;
+			}
+		};
+		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				appStage.setScene(newScreen);
+				appStage.show();
+			}
+		});
+		new Thread(sleeper).start();
+	}
+
+	public void back(ActionEvent event) throws IOException {
+		Parent newParent = (Parent) FXMLLoader.load(getClass().getResource("../view/HomePageCustomer.fxml"));
+		Scene newScreen = new Scene(newParent);
+		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		appStage.setScene(newScreen);
+		appStage.show();
+	}
+
+	public void setPositionAnims() {
+		tmDown = new Timeline();
+		tmUp = new Timeline();
+		LinkedList<Node> formElements = new LinkedList<Node>();
+		formElements.add(rUsername);
+		formElements.add(tfUsername);
+		formElements.add(rPassword);
+		formElements.add(pfPassword);
+		formElements.add(rSchoolnumber);
+		formElements.add(tfSchoolNumber);
+		formElements.add(rEmail);
+		formElements.add(tfEmail);
+		formElements.add(rName);
+		formElements.add(tfName);
+		formElements.add(rSurname);
+		formElements.add(tfSurname);
+		formElements.add(rBirthdate);
+		formElements.add(dpBirthday);
+		formElements.add(rPhonenumber);
+		formElements.add(tfPhoneNumber);
+		tmDown = AnimationFabric.createPositionAnim(formElements, -10, 0);
+		tmUp = AnimationFabric.createPositionAnim(formElements, 0, -10);
+	}
+
+	public void setColorAnims() {
+		usernameToRed = new FillTransition(Duration.millis(300.0D), rUsername, Color.valueOf("#727986"),
+				Color.valueOf("#d41923"));
+		usernameToGrey = new FillTransition(Duration.millis(300.0D), rUsername, Color.valueOf("#d41923"),
+				Color.valueOf("#727986"));
+		passwordToRed = new FillTransition(Duration.millis(300.0D), rPassword, Color.valueOf("#727986"),
+				Color.valueOf("#d41923"));
+		passwordToGrey = new FillTransition(Duration.millis(300.0D), rPassword, Color.valueOf("#d41923"),
+				Color.valueOf("#727986"));
+		schoolnumberToRed = new FillTransition(Duration.millis(300.0D), rSchoolnumber, Color.valueOf("#727986"),
+				Color.valueOf("#d41923"));
+		schoolnumberToGrey = new FillTransition(Duration.millis(300.0D), rSchoolnumber, Color.valueOf("#d41923"),
+				Color.valueOf("#727986"));
+		emailToRed = new FillTransition(Duration.millis(300.0D), rEmail, Color.valueOf("#727986"),
+				Color.valueOf("#d41923"));
+		emailToGrey = new FillTransition(Duration.millis(300.0D), rEmail, Color.valueOf("#d41923"),
+				Color.valueOf("#727986"));
+	}
+
+	public void removePic(ActionEvent event) throws SQLException {
+
+		ivUser.setImage(Main.defaultPP);
+		remove.setDisable(true);
+		remove.setOpacity(0);
+		imageLoaded = false;
+
+		PreparedStatement statement = Main.con.prepareStatement(
+				"UPDATE user SET profilepic = NULL WHERE iduserinfo = ? ");
+		statement.setInt(1, Main.currentUser.getUserId());
+		statement.executeUpdate();
+
+	}
+
+	public void rollbackAnims() {
+		tmUp.play();
+		if (failUsername) {
+			usernameToGrey.play();
+			hideUsernameWarning.play();
+			failUsername = false;
+		}
+
+		if (failPassword) {
+			passwordToGrey.play();
+			hidePasswordWarning.play();
+			failPassword = false;
+		}
+
+		if (failSchoolnumber) {
+			schoolnumberToGrey.play();
+			hideSchoolnumberWarning.play();
+			failSchoolnumber = false;
+		}
+
+		if (failEmail) {
+			emailToGrey.play();
+			hideEmailWarning.play();
+			failEmail = false;
+		}
+
+		failControl = false;
+	}
+
+	public void lineUsername() {
+		}
+
+
+
+	public void linePassword() {
+		rPassword.setOpacity(1.0D);
+		if (failControl) {
+			rollbackAnims();
+		}
+
+	}
+
+	public void lineSchoolNumber() {
+
+	}
+
+	public void lineEmail() {
+		rEmail.setOpacity(1.0D);
+		if (failControl) {
+			rollbackAnims();
+		}
+
+	}
+
+	public void lineName() {
+		rName.setOpacity(1.0D);
+		if (failControl) {
+			rollbackAnims();
+		}
+
+	}
+
+	public void lineSurname() {
+		rSurname.setOpacity(1.0D);
+		if (failControl) {
+			rollbackAnims();
+		}
+
+	}
+
+	public void lineBirthday() {
+		rBirthdate.setOpacity(1.0D);
+		if (failControl) {
+			rollbackAnims();
+		}
+
+	}
+
+	public void linePhoneNumber() {
+		rPhonenumber.setOpacity(1.0D);
+		if (failControl) {
+			rollbackAnims();
+		}
+
+	}
+}

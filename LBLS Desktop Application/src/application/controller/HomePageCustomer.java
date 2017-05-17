@@ -14,6 +14,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class HomePageCustomer implements Initializable {
@@ -21,6 +24,8 @@ public class HomePageCustomer implements Initializable {
 	public TextField tfSearch;
 	public GridPane lnSearch;
 	public Label lbName, lbSchoolidentity;
+	public Circle ppUser;
+	public Rectangle rSearch;
 
 
 
@@ -32,6 +37,55 @@ public class HomePageCustomer implements Initializable {
 		lbName.setText(Main.currentUser.getName() + " " + Main.currentUser.getSurname());
 		lbSchoolidentity.setText(Integer.toString(Main.currentUser.getSchoolNumber()));
 
+		if(Main.currentUser.getProfilePic()==null){
+
+			ppUser.setFill(new ImagePattern(Main.defaultPP));
+		}
+		else {
+			ppUser.setFill(new ImagePattern(Main.currentUser.getProfilePic()));
+		}
+
+	}
+	public void handleSearch(ActionEvent event) throws IOException{
+		Main.userInput = tfSearch.getText().toLowerCase();
+		Parent newParent = FXMLLoader.load(getClass().getResource("../view/C5SearchResults.fxml"));
+		Scene newScreen = new Scene(newParent);
+		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		appStage.setScene(newScreen);
+		appStage.show();
+	}
+	public void library(ActionEvent event) throws IOException{
+		Parent newParent = FXMLLoader.load(getClass().getResource("../view/C1Library.fxml"));
+		Scene newScreen = new Scene(newParent);
+		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		appStage.setScene(newScreen);
+		appStage.show();
+	}
+
+
+	public void myBooks(ActionEvent event) throws IOException{
+		Parent newParent = FXMLLoader.load(getClass().getResource("../view/C2MyBooks.fxml"));
+		Scene newScreen = new Scene(newParent);
+		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		appStage.setScene(newScreen);
+		appStage.show();
+	}
+
+
+	public void reservations(ActionEvent event) throws IOException{
+		Parent newParent = FXMLLoader.load(getClass().getResource("../view/Login.fxml"));
+		Scene newScreen = new Scene(newParent);
+		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		appStage.setScene(newScreen);
+		appStage.show();
+	}
+
+	public void settings(ActionEvent event) throws IOException{
+		Parent newParent = FXMLLoader.load(getClass().getResource("../view/C4UserSettings.fxml"));
+		Scene newScreen = new Scene(newParent);
+		Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		appStage.setScene(newScreen);
+		appStage.show();
 	}
 
 	public void logout(ActionEvent event) throws IOException{
@@ -44,7 +98,7 @@ public class HomePageCustomer implements Initializable {
 	}
 
 	public void lineSearch() {
-		lnSearch.setStyle("-fx-opacity: 1.0;");
+		rSearch.setOpacity(1);
 	}
 
 }

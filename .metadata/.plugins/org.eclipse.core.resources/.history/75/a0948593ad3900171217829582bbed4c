@@ -1,0 +1,96 @@
+package application.controller;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
+
+import javax.imageio.ImageIO;
+
+import application.Main;
+import application.model.Book;
+import javafx.animation.FadeTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+public class C1_3BorrowDialog implements Initializable {
+
+	public DatePicker dpBorrowdate, dpReturndate;
+	public GridPane gpForm;
+	public Button btnOK, btnCancel, btnBorrow;
+	public Label lbBookname, lbMessage;
+	public Pane iconSuccess;
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		LocalDate currentLocalDate = LocalDate.now();
+		btnOK.setOpacity(0);
+		btnOK.setDisable(true);
+		lbMessage.setOpacity(0);
+		iconSuccess.setOpacity(0);
+		lbBookname.setText(Main.selectedBook.getName());
+
+
+		dpBorrowdate.setValue(currentLocalDate);
+
+	}
+
+	public void close(ActionEvent event){
+		final Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		appStage.close();
+	}
+
+	public void borrow(ActionEvent event) throws SQLException{
+		PreparedStatement borrowQuery = Main.con.prepareStatement("INSERT INTO "
+				+ "borrow (`idbook`, `owner`, `borrowdate`, `returndate`) VALUES (?, ?, ?, ?)");
+				borrowQuery.setInt(1, Main.selectedBook.getid());
+				borrowQuery.setInt(2, Main.currentUser.getUserId());
+				borrowQuery.setDate(3, DBFormatController.dateToDatabase((LocalDate)dpBorrowdate.getValue()));
+				borrowQuery.setDate(4, DBFormatController.dateToDatabase((LocalDate)dpReturndate.getValue()));
+
+				if(dpReturndate.getValue()!=null)
+					borrowQuery.execute();
+		gpForm.setOpacity(0);
+		btnBorrow.setDisable(true);
+		btnCancel.setDisable(true);
+		btnBorrow.setOpacity(0);
+		btnCancel.setOpacity(0);
+		btnOK.setDisable(false);
+
+		btnOK.setOpacity(1);
+		lbMessage.setOpacity(1);
+		iconSuccess.setOpacity(1);
+
+
+
+	}
+
+}

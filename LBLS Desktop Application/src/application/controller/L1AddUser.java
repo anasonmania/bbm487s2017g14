@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,12 +45,15 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
@@ -106,11 +110,7 @@ public class L1AddUser implements Initializable {
 	private FadeTransition showBottom;
 	private FadeTransition hideBottom;
 	private FadeTransition showSuccessMsg;
-	private FadeTransition hideSuccessMsg;
 	private FadeTransition showSuccessImg;
-	private FadeTransition hideSuccessImg;
-	private FadeTransition showSuccessBtn;
-	private FadeTransition hideSuccessBtn;
 	private FillTransition usernameToRed;
 	private FillTransition usernameToGrey;
 	private FillTransition passwordToRed;
@@ -122,7 +122,7 @@ public class L1AddUser implements Initializable {
 	private Duration opacityFactor = Duration.millis(1000.0D);
 	private Pattern pattern;
 	private Matcher matcher;
-	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	int checkDesStart;
 	int remainChar;
 
@@ -151,7 +151,7 @@ public class L1AddUser implements Initializable {
 		showBottom.play();
 	}
 
-	public void addNewUser(ActionEvent event) throws FileNotFoundException, SQLException {
+	public void addNewUser(ActionEvent event) throws SQLException, NoSuchAlgorithmException, IOException {
 		if (!checkInputs()) {
 			HashSet<Integer> ids = new HashSet<Integer>();
 			PreparedStatement idsQuery = Main.con.prepareStatement("SELECT iduserinfo FROM user ");
@@ -184,7 +184,7 @@ public class L1AddUser implements Initializable {
 				}
 
 				username = tfUsername.getText();
-				password = pfPassword.getText();
+				password = DBFormatController.passToDatabase(pfPassword.getText());
 				if (!tfSchoolNumber.getText().equals("")) {
 					schoolnumber = Integer.parseInt(tfSchoolNumber.getText());
 					statement.setInt(4, schoolnumber);
@@ -207,11 +207,6 @@ public class L1AddUser implements Initializable {
 				statement.setBlob(10, insUser);
 				statement.setInt(11, 0);
 				statement.execute();
-				hideBottom.play();
-				hideContent.play();
-				hideHeader.play();
-				showSuccessMsg.play();
-				showSuccessImg.play();
 			} else {
 				statement = Main.con.prepareStatement(
 						"INSERT INTO user (`iduserinfo`, `username`, `password`, `schoolnumber`, `email`, `name`, `surname`, `birthdate`, `phonenumber`, `islibrarian`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? )");
@@ -223,7 +218,7 @@ public class L1AddUser implements Initializable {
 				}
 
 				username = tfUsername.getText();
-				password = pfPassword.getText();
+				password = DBFormatController.passToDatabase(pfPassword.getText());
 				if (!tfSchoolNumber.getText().equals("")) {
 					schoolnumber = Integer.parseInt(tfSchoolNumber.getText());
 					statement.setInt(4, schoolnumber);
@@ -244,12 +239,15 @@ public class L1AddUser implements Initializable {
 				statement.setString(9, phonenumber);
 				statement.setInt(10, 0);
 				statement.execute();
-				hideBottom.play();
-				hideContent.play();
-				hideHeader.play();
-				showSuccessMsg.play();
-				showSuccessImg.play();
 			}
+
+			BorderPane borrowPane = (BorderPane) FXMLLoader.load(this.getClass().getResource("../view/DialogSuccess.fxml"));
+			Scene borrowDialog = new Scene(borrowPane, 560, 240);
+			Stage borrowStage = new Stage();
+			borrowStage.setScene(borrowDialog);
+			borrowStage.initStyle(StageStyle.UNDECORATED);
+			borrowStage.initModality(Modality.APPLICATION_MODAL);
+			borrowStage.showAndWait();
 		}
 
 	}
@@ -285,6 +283,7 @@ public class L1AddUser implements Initializable {
 		extensions.add("*.gif");
 		System.out.println("imagefield clicked");
 		FileChooser fileChooser = new FileChooser();
+		fileChooser.setInitialDirectory(Main.usersDir);
 		fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", extensions));
 		imageFile = fileChooser.showOpenDialog((Window) null);
 		if (imageFile != null) {

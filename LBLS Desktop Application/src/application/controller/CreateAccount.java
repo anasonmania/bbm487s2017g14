@@ -5,6 +5,7 @@ import application.controller.AnimationFabric;
 import application.controller.DBFormatController;
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,12 +31,15 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 public class CreateAccount implements Initializable {
@@ -50,9 +54,6 @@ public class CreateAccount implements Initializable {
 	public GridPane paneHeader;
 	public GridPane paneForm;
 	public VBox paneBottom;
-	public Pane iconTick;
-	public Label lbCreated;
-	public Button btnClicktologin;
 	public Label warnUsername;
 	public Label warnPassword;
 	public Label warnSchoolnumber;
@@ -95,15 +96,12 @@ public class CreateAccount implements Initializable {
 	private FadeTransition showBottom;
 	private FadeTransition hideBottom;
 	private FadeTransition showSuccessMsg;
-	private FadeTransition hideSuccessMsg;
 	private FadeTransition showSuccessImg;
-	private FadeTransition hideSuccessImg;
 	private FadeTransition showSuccessBtn;
-	private FadeTransition hideSuccessBtn;
 	private Duration opacityFactor = Duration.millis(300.0D);
 	private Pattern pattern;
 	private Matcher matcher;
-	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	public void initialize(URL location, ResourceBundle resources) {
 		tfUsername.setPromptText("Username");
@@ -129,7 +127,7 @@ public class CreateAccount implements Initializable {
 				.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 	}
 
-	public void createAccount(ActionEvent event) throws SQLException {
+	public void createAccount(ActionEvent event) throws SQLException, NoSuchAlgorithmException, IOException {
 		HashSet<Integer> ids = new HashSet<Integer>();
 		PreparedStatement idsQuery = Main.con.prepareStatement("SELECT iduserinfo FROM user ");
 		ResultSet result = idsQuery.executeQuery();
@@ -150,7 +148,7 @@ public class CreateAccount implements Initializable {
 			}
 
 			String username = tfUsername.getText();
-			String password = pfPassword.getText();
+			String password = DBFormatController.passToDatabase(pfPassword.getText());
 			if (!tfSchoolNumber.getText().equals("")) {
 				int schoolnumber = Integer.parseInt(tfSchoolNumber.getText());
 				statement.setInt(4, schoolnumber);
@@ -168,16 +166,20 @@ public class CreateAccount implements Initializable {
 			statement.setString(5, email);
 			statement.setString(6, name);
 			statement.setString(7, surname);
-			statement.setDate(8, DBFormatController.dateToDatabase(birthdate));
+			if(birthdate==null)
+				statement.setDate(8, null);
+			else
+				statement.setDate(8, DBFormatController.dateToDatabase(birthdate));
 			statement.setString(9, phonenumber);
 			statement.setInt(10, 0);
 			statement.execute();
-			hideBottom.play();
-			hideForm.play();
-			hideHeader.play();
-			showSuccessMsg.play();
-			showSuccessImg.play();
-			showSuccessBtn.play();
+			BorderPane borrowPane = (BorderPane) FXMLLoader.load(this.getClass().getResource("../view/DialogSuccess.fxml"));
+			Scene borrowDialog = new Scene(borrowPane, 560, 240);
+			Stage borrowStage = new Stage();
+			borrowStage.setScene(borrowDialog);
+			borrowStage.initStyle(StageStyle.UNDECORATED);
+			borrowStage.initModality(Modality.APPLICATION_MODAL);
+			borrowStage.showAndWait();
 		}
 
 	}
@@ -414,14 +416,6 @@ public class CreateAccount implements Initializable {
 		showBottom = AnimationFabric.createOpacityAnim(paneBottom, 0.0D, 1.0D,
 				opacityFactor.multiply(3.0D));
 		hideBottom = AnimationFabric.createOpacityAnim(paneBottom, 1.0D, 0.0D, opacityFactor);
-		showSuccessMsg = AnimationFabric.createOpacityAnim(lbCreated, 0.0D, 1.0D,
-				opacityFactor.multiply(2.0D));
-		hideSuccessMsg = AnimationFabric.createOpacityAnim(lbCreated, 1.0D, 0.0D, opacityFactor);
-		showSuccessImg = AnimationFabric.createOpacityAnim(iconTick, 0.0D, 1.0D, opacityFactor);
-		hideSuccessImg = AnimationFabric.createOpacityAnim(iconTick, 1.0D, 0.0D, opacityFactor);
-		showSuccessBtn = AnimationFabric.createOpacityAnim(btnClicktologin, 0.0D, 1.0D,
-				opacityFactor.multiply(3.0D));
-		hideSuccessBtn = AnimationFabric.createOpacityAnim(btnClicktologin, 1.0D, 0.0D, opacityFactor);
 	}
 
 	public void rollbackAnims() {

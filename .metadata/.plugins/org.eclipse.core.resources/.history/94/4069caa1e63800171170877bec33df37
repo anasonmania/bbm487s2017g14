@@ -1,0 +1,166 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+
+
+.root{
+
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url("/font/Roboto-Regular.ttf");
+}
+
+.text-xsmall{
+	-fx-font-family: Roboto;
+	-fx-font-size: 12.0;
+	-fx-text-fill: #727986;
+	-fx-fill: #727986;
+	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-xsmall-red{
+	-fx-font-family: Roboto;
+	-fx-font-size: 12.0;
+	-fx-text-fill: #d41923;
+	-fx-fill: #727986;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-medium{
+	-fx-font-family: Roboto;
+	-fx-font-size: 16.0;
+	-fx-text-fill: #727986;
+	-fx-fill: #727986;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-medium-red{
+	-fx-font-family: Roboto;
+	-fx-font-size: 13.0;
+	-fx-text-fill: #d41923;
+	-fx-fill: #727986;
+	-fx-font-smoothing-type: gray;
+	-fx-font-weight: BOLD;
+}
+
+.text-tfheader{
+	-fx-font-family: Roboto;
+	-fx-font-size: 13.0;
+	-fx-text-fill: #858c99;
+	-fx-fill: #858c99;
+	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
+}
+
+
+.text-a1{
+	-fx-font-family: Roboto;
+	-fx-font-size: 16.0;
+	-fx-text-fill: #858c99;
+	-fx-fill: #858c99;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-a1b{
+	-fx-font-family: Roboto;
+	-fx-font-size: 16.0;
+	-fx-text-fill: #858c99;
+	-fx-fill: #858c99;
+	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-a2{
+	-fx-font-family: Roboto;
+	-fx-font-size: 14.0;
+	-fx-text-fill: #858c99;
+	-fx-fill: #858c99;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-a2b{
+	-fx-font-family: Roboto;
+	-fx-font-size: 14.0;
+	-fx-text-fill: #858c99;
+	-fx-fill: #858c99;
+	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-a2bred{
+	-fx-font-family: Roboto;
+	-fx-font-size: 14.0;
+	-fx-text-fill: #d41923;
+	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-a2bgreen{
+	-fx-font-family: Roboto;
+	-fx-font-size: 14.0;
+	-fx-text-fill: #46b859;
+	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-b1{
+	-fx-font-family: Roboto;
+	-fx-font-size: 14.0;
+	-fx-text-fill: #858c99;
+	-fx-fill: #858c99;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-b1b{
+	-fx-font-family: Roboto;
+	-fx-font-size: 14.0;
+	-fx-text-fill: #858c99;
+	-fx-fill: #858c99;
+	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-large-bold{
+	-fx-font-family: Roboto;
+	-fx-font-size: 20.0;
+	-fx-fill: #727986;
+	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-input-placeholder{
+	-fx-font-family: Roboto;
+	-fx-font-size: 18.0;
+	-fx-text-fill: #727986;
+	-fx-opacity: 0.5;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-input{
+	-fx-font-family: Roboto;
+	-fx-font-size: 16.0;
+	-fx-text-fill: #727986;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-user{
+	-fx-font-family: Roboto;
+	-fx-font-size: 20.0;
+	-fx-text-fill: #727986;
+	-fx-font-smoothing-type: gray;
+}
+
+.text-welcome{
+	-fx-font-family: Roboto;
+	-fx-font-size: 20.0;
+	-fx-text-fill: #46b859;
+	-fx-font-smoothing-type: gray;
+	-fx-font-weight: BOLD;
+}
+
+
+
+
+

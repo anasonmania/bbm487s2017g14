@@ -3,9 +3,11 @@ package application.controller;
 import application.Main;
 import application.controller.AnimationFabric;
 import application.controller.DBFormatController;
+import application.model.Book;
 import application.model.User;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -26,12 +28,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -43,6 +48,8 @@ public class L2EditUser implements Initializable {
 	public GridPane paneBottom;
 	public TextField tfSearch;
 	public Rectangle rSearch;
+	public Rectangle rUserimg;
+	public Label lbName, lbSchoolnum, lbEmail, lbRole;
 	public TableView<User> tableUser;
 	private ObservableList<User> userList;
 	private FadeTransition showHeader;
@@ -70,6 +77,28 @@ public class L2EditUser implements Initializable {
 		showHeader.play();
 		showContent.play();
 		showBottom.play();
+
+		tableUser.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue)->{
+			if(tableUser.getSelectionModel().getSelectedItem()!=null){
+				User selectedItem = tableUser.getSelectionModel().getSelectedItem();
+				lbName.setText(selectedItem.getName() + " " + selectedItem.getSurname());
+				lbSchoolnum.setText(Integer.toString(selectedItem.getSchoolNumber()));
+				lbEmail.setText(selectedItem.getEmail());
+				if(selectedItem.getProfilePic()!=null){
+					rUserimg.setFill(new ImagePattern(selectedItem.getProfilePic()));
+				}
+				else{
+					rUserimg.setFill(new ImagePattern(Main.defaultPP));
+				}
+				if(selectedItem.getIslibrarian()>0){
+					lbRole.setText("Librarian");
+				}
+				else{
+					lbRole.setText("Customer");
+				}
+			}
+		});
+		tableUser.getSelectionModel().selectFirst();
 	}
 
 	public void logout(ActionEvent event) throws IOException {
@@ -185,12 +214,13 @@ public class L2EditUser implements Initializable {
 			}
 
 			int islibrarian = result.getInt("islibrarian");
-			userList.add(new User(username, email, name, surname, phonenumber, birthdate, iduserinfo, schoolnumber,
+			userList.add(new User(username, password, email, name, surname, phonenumber, birthdate, iduserinfo, schoolnumber,
 					profilePic, islibrarian));
 		}
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void createTable() {
 		TableColumn<User, String> usernameCol = new TableColumn<User, String>("Username");
 		usernameCol.setMinWidth(144.0D);
@@ -198,8 +228,17 @@ public class L2EditUser implements Initializable {
 		TableColumn<User, String> nameCol = new TableColumn<User, String>("Name");
 		nameCol.setMinWidth(144.0D);
 		nameCol.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
+
+		TableColumn<User, String> surnameCol = new TableColumn<User, String>("Surname");
+		surnameCol.setMinWidth(144.0D);
+		surnameCol.setCellValueFactory(new PropertyValueFactory<User, String>("surname"));
+
+		TableColumn<User, String> emailCol = new TableColumn<User, String>("Email");
+		emailCol.setMinWidth(144.0D);
+		emailCol.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
+
 		tableUser.setItems(userList);
 		tableUser.getColumns().clear();
-		tableUser.getColumns().addAll(usernameCol, nameCol);
+		tableUser.getColumns().addAll(usernameCol, nameCol, surnameCol, emailCol);
 	}
 }

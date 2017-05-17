@@ -1,10 +1,24 @@
 package application.model;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+
+import javax.imageio.ImageIO;
+
+import application.Main;
+import application.controller.DBFormatController;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 
 public class User {
 	private String username;
+	private String password;
 	private String email;
 	private String name;
 	private String surname;
@@ -14,10 +28,12 @@ public class User {
 	private int schoolNumber;
 	private int islibrarian;
 	private Image profilePic;
+	private Image profilePicThumb;
 
-	public User(String username, String email, String name, String surname, String phoneNumber, LocalDate birthDate,
+	public User(String username, String password, String email, String name, String surname, String phoneNumber, LocalDate birthDate,
 			int userId, int schoolNumber, Image profilePic, int islibrarian) {
 		this.username = username;
+		this.password = password;
 		this.email = email;
 		this.name = name;
 		this.surname = surname;
@@ -36,9 +52,11 @@ public class User {
 		this.surname = "";
 		this.phoneNumber = "";
 		this.birthDate = null;
-		this.userId = 0;
-		this.schoolNumber = 0;
-		this.islibrarian = 0;
+		this.userId = -1;
+		this.schoolNumber = -1;
+		this.islibrarian = -1;
+		this.profilePic = null;
+		this.password = null;
 	}
 
 	public String getUsername() {
@@ -101,6 +119,14 @@ public class User {
 		return this.schoolNumber;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public void setSchoolNumber(int schoolNumber) {
 		this.schoolNumber = schoolNumber;
 	}
@@ -119,5 +145,47 @@ public class User {
 
 	public void setProfilePic(Image profilePic) {
 		this.profilePic = profilePic;
+	}
+
+	public void setThumb(Image profilePicThumb){
+		this.profilePicThumb = profilePicThumb;
+	}
+
+	public Image getThumb(){
+		return this.profilePicThumb;
+	}
+
+	public void updateCurrentUser(String username) throws SQLException, IOException{
+
+		PreparedStatement statement = Main.con.prepareStatement("SELECT * from user WHERE username = \'" + username + "\' ");
+		ResultSet result = statement.executeQuery();
+		WritableImage profilePic;
+		while (result.next()) {
+			byte[] imgBuf = result.getBytes("profilepic");
+
+			if (imgBuf != null) {
+				ByteArrayInputStream in = new ByteArrayInputStream(imgBuf);
+				BufferedImage bufferedImage = ImageIO.read(in);
+
+				profilePic = SwingFXUtils.toFXImage(bufferedImage, (WritableImage) null);
+			} else {
+				profilePic = null;
+			}
+
+			if (result.getDate("birthdate") == null) {
+
+				Main.currentUser = new User(result.getString("username"), result.getString("password"),
+						result.getString("email"), result.getString("name"), result.getString("surname"),
+						result.getString("phonenumber"), (LocalDate) null, result.getInt("iduserinfo"),
+						result.getInt("schoolnumber"), (Image) profilePic, result.getInt("islibrarian"));
+			} else {
+				Main.currentUser = new User(result.getString("username"), result.getString("password"),
+						result.getString("email"), result.getString("name"), result.getString("surname"),
+						result.getString("phonenumber"), DBFormatController.dateToJava(result.getDate("birthdate")),
+						result.getInt("iduserinfo"), result.getInt("schoolnumber"), (Image) profilePic,
+						result.getInt("islibrarian"));
+			}
+
+		}
 	}
 }

@@ -6,37 +6,37 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="tmD" key="selection"/>
+		<item value="ADD B" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="tmD"/>
-			<item value="= 0;"/>
-			<item value="int"/>
-			<item value="ToGray"/>
-			<item value="toGray"/>
-			<item value="toRed"/>
-			<item value="passwordTo"/>
-			<item value="tmRollback"/>
+			<item value="add b"/>
+			<item value="Add B"/>
+			<item value="schoolNumCol"/>
+			<item value="Integer"/>
+			<item value="nameCol"/>
+			<item value="file"/>
+			<item value="f"/>
+			<item value="fileC"/>
 		</list>
 		<list key="replacehistory">
-			<item value="= false;"/>
-			<item value="boolean"/>
-			<item value="ToGrey"/>
-			<item value="ToGray"/>
-			<item value="toGray"/>
-			<item value="tmUp"/>
-			<item value="tmRollback"/>
-			<item value="window"/>
+			<item value="emailCol"/>
+			<item value="String"/>
+			<item value="surnameCol"/>
+			<item value="id"/>
+			<item value="3"/>
+			<item value=""/>
+			<item value="Pay"/>
+			<item value="get(2)"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="284" key="DIALOG_WIDTH"/>
+		<item value="464" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="391" key="DIALOG_HEIGHT"/>
-		<item value="826" key="DIALOG_X_ORIGIN"/>
-		<item value="268" key="DIALOG_Y_ORIGIN"/>
+		<item value="910" key="DIALOG_X_ORIGIN"/>
+		<item value="241" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

@@ -7,21 +7,34 @@ public class Book {
 	private String author;
 	private String publisher;
 	private String description;
-	private int idbook;
+	private int id;
 	private int isbn;
+	private int owner;
 	private boolean isAvailable;
 	private Image image;
 
-	public Book(String name, String author, String publisher, String description, int idbook, int isbn,
-			boolean isAvailable, Image image) {
+	public Book(String name, String author, String publisher, String description, int id, int isbn,
+			boolean isAvailable, Image image, int owner) {
 		this.name = name;
 		this.author = author;
 		this.publisher = publisher;
 		this.description = description;
-		this.idbook = idbook;
+		this.id = id;
 		this.isbn = isbn;
 		this.isAvailable = isAvailable;
 		this.image = image;
+	}
+
+	public int getowner() {
+		return owner;
+	}
+
+	public void setowner(int owner) {
+		this.owner = owner;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public String getName() {
@@ -56,12 +69,12 @@ public class Book {
 		this.description = description;
 	}
 
-	public int getIdbook() {
-		return this.idbook;
+	public int getid() {
+		return this.id;
 	}
 
-	public void setIdbook(int idbook) {
-		this.idbook = idbook;
+	public void setid(int id) {
+		this.id = id;
 	}
 
 	public int getIsbn() {

@@ -1,9 +1,5 @@
 package application.controller;
 
-import application.Main;
-import application.controller.AnimationFabric;
-import application.controller.DBFormatController;
-import application.model.User;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -11,8 +7,12 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
+
+import javax.imageio.ImageIO;
+
+import application.Main;
+import application.model.Book;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,16 +26,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.imageio.ImageIO;
 
 public class L4EditBook implements Initializable {
 	public GridPane paneHeader;
@@ -43,15 +44,21 @@ public class L4EditBook implements Initializable {
 	public GridPane paneBottom;
 	public TextField tfSearch;
 	public Rectangle rSearch;
-	public TableView<User> tableBook;
-	private ObservableList<User> userList;
+	public Rectangle rBookimg;
+	public Label lbBookname;
+	public Label lbAuthor;
+	public Label lbPublisher;
+	public Label lbAvailable;
+
+	public TableView<Book> tableBook;
+	private ObservableList<Book> bookList;
 	private FadeTransition showHeader;
 	private FadeTransition hideHeader;
 	private FadeTransition showContent;
 	private FadeTransition hideContent;
 	private FadeTransition showBottom;
 	private FadeTransition hideBottom;
-	private Duration opacityFactor = Duration.millis(1000.0D);
+	private Duration opacityFactor = Duration.millis(1000.0d);
 	int checkDesStart;
 	int remainChar;
 
@@ -60,23 +67,47 @@ public class L4EditBook implements Initializable {
 		setOpacityAnims();
 
 		try {
-			getUsers();
+			getBooks();
 			createTable();
-		} catch (SQLException arg3) {
-			arg3.printStackTrace();
-		} catch (IOException arg4) {
-			arg4.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		showHeader.play();
 		showContent.play();
 		showBottom.play();
+
+		tableBook.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue)->{
+			if(tableBook.getSelectionModel().getSelectedItem()!=null){
+				Book selectedItem = tableBook.getSelectionModel().getSelectedItem();
+				lbBookname.setText(selectedItem.getName());
+				lbAuthor.setText(selectedItem.getAuthor());
+				lbPublisher.setText(selectedItem.getPublisher());
+				if(selectedItem.getImage()!=null){
+					rBookimg.setFill(new ImagePattern(selectedItem.getImage()));
+				}
+				else{
+					rBookimg.setFill(new ImagePattern(Main.defaultBook));
+				}
+
+				if(selectedItem.isAvailable()){
+					lbAvailable.setText("Available");
+					lbAvailable.setStyle("-fx-text-fill: #46b859;");
+				}
+				else{
+					lbAvailable.setText("Not Available");
+					lbAvailable.setStyle("-fx-text-fill: #d41923;");
+				}
+			}
+		});
+		tableBook.getSelectionModel().selectFirst();
 	}
 
 	public void toEditBook(ActionEvent event) throws SQLException, IOException {
-		Main.selectedUser = (User) tableBook.getSelectionModel().getSelectedItem();
-		System.out.println(Main.selectedUser.getEmail());
-		Parent newParent = (Parent) FXMLLoader.load(getClass().getResource("../view/L2_2EditUser.fxml"));
+		Main.selectedBook = (Book) tableBook.getSelectionModel().getSelectedItem();
+		Parent newParent = (Parent) FXMLLoader.load(getClass().getResource("../view/L4_2EditBook.fxml"));
 		final Scene newScreen = new Scene(newParent);
 		final Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -128,6 +159,28 @@ public class L4EditBook implements Initializable {
         new Thread(sleeper).start();
 	}
 
+	public void handleSearch(ActionEvent event){
+		ObservableList<Book> bookList2 = FXCollections.observableArrayList();
+		bookList.forEach((item)->{
+			bookList2.add(item);
+		});
+		bookList.removeAll(bookList);
+		Main.userInput = tfSearch.getText().toLowerCase();
+		System.out.println(bookList2.size());
+		bookList2.forEach((item)->{
+			String name = item.getName();
+			String author = item.getAuthor();
+			String publisher = item.getPublisher();
+			String nameC, authorC, publisherC;
+			nameC = name.toLowerCase();
+			authorC = author.toLowerCase();
+			publisherC = publisher.toLowerCase();
+			if(nameC.indexOf(Main.userInput)!=-1 || authorC.indexOf(Main.userInput)!=-1
+					|| publisherC.indexOf(Main.userInput)!=-1 )
+			bookList.add(item);
+		});
+	}
+
 	public void back(ActionEvent event) throws IOException {
 		Parent newParent = (Parent) FXMLLoader.load(getClass().getResource("../view/HomePageLibrarian.fxml"));
 		Scene newScreen = new Scene(newParent);
@@ -137,69 +190,67 @@ public class L4EditBook implements Initializable {
 	}
 
 	public void setOpacityAnims() {
-		showHeader = AnimationFabric.createOpacityAnim(paneHeader, 0.0D, 1.0D,
-				opacityFactor.divide(2.0D));
-		showContent = AnimationFabric.createOpacityAnim(paneContent, 0.0D, 1.0D, opacityFactor);
-		showBottom = AnimationFabric.createOpacityAnim(paneBottom, 0.0D, 1.0D,
-				opacityFactor.multiply(2.0D));
-		hideHeader = AnimationFabric.createOpacityAnim(paneHeader, 1.0D, 0.0D,
-				opacityFactor.multiply(2.0D));
-		hideContent = AnimationFabric.createOpacityAnim(paneContent, 1.0D, 0.0D, opacityFactor);
-		hideBottom = AnimationFabric.createOpacityAnim(paneBottom, 1.0D, 0.0D,
-				opacityFactor.divide(2.0D));
+		showHeader = AnimationFabric.createOpacityAnim(paneHeader, 0.0d, 1.0d,
+				opacityFactor.divide(2.0d));
+		showContent = AnimationFabric.createOpacityAnim(paneContent, 0.0d, 1.0d, opacityFactor);
+		showBottom = AnimationFabric.createOpacityAnim(paneBottom, 0.0d, 1.0d,
+				opacityFactor.multiply(2.0d));
+		hideHeader = AnimationFabric.createOpacityAnim(paneHeader, 1.0d, 0.0d,
+				opacityFactor.multiply(2.0d));
+		hideContent = AnimationFabric.createOpacityAnim(paneContent, 1.0d, 0.0d, opacityFactor);
+		hideBottom = AnimationFabric.createOpacityAnim(paneBottom, 1.0d, 0.0d,
+				opacityFactor.divide(2.0d));
 	}
 
 	public void lineSearch() {
-		rSearch.setOpacity(1.0D);
+		rSearch.setOpacity(1.0d);
 	}
 
-	private void getUsers() throws SQLException, IOException {
-		userList = FXCollections.observableArrayList();
+	private void getBooks() throws SQLException, IOException {
+		bookList = FXCollections.observableArrayList();
 		PreparedStatement idsQuery = Main.con.prepareStatement("SELECT * FROM book ");
 		ResultSet result = idsQuery.executeQuery();
 
 		while (result.next()) {
-			int iduserinfo = result.getInt("iduserinfo");
-			int schoolnumber = result.getInt("schoolnumber");
-			String phonenumber = result.getString("phonenumber");
-			String username = result.getString("username");
-			String password = result.getString("password");
-			String email = result.getString("email");
+			int idbook = result.getInt("id");
+			int isbn = result.getInt("isbn");
+			int owner = result.getInt("owner");
 			String name = result.getString("name");
-			String surname = result.getString("surname");
-			LocalDate birthdate;
-			if (result.getDate("birthdate") != null) {
-				birthdate = DBFormatController.dateToJava(result.getDate("birthdate"));
-			} else {
-				birthdate = null;
-			}
+			String author = result.getString("author");
+			String publisher = result.getString("publisher");
+			String description = result.getString("description");
+			Boolean isAvailable = result.getBoolean("isavailable");
 
-			byte[] imgBuf = result.getBytes("profilepic");
-			WritableImage profilePic;
+
+			byte[] imgBuf = result.getBytes("image");
+			WritableImage bookImg;
 			if (imgBuf != null) {
 				ByteArrayInputStream in = new ByteArrayInputStream(imgBuf);
 				BufferedImage bufferedImage = ImageIO.read(in);
-				profilePic = SwingFXUtils.toFXImage(bufferedImage, (WritableImage) null);
+				bookImg = SwingFXUtils.toFXImage(bufferedImage, (WritableImage) null);
 			} else {
-				profilePic = null;
+				bookImg = null;
 			}
 
-			int islibrarian = result.getInt("islibrarian");
-			userList.add(new User(username, email, name, surname, phonenumber, birthdate, iduserinfo, schoolnumber,
-					profilePic, islibrarian));
+			bookList.add(new Book(name, author, publisher, description, idbook, isbn, isAvailable, bookImg
+					, owner));
 		}
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void createTable() {
-		TableColumn<User, String> usernameCol = new TableColumn<User, String>("Username");
-		usernameCol.setMinWidth(144.0D);
-		usernameCol.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
-		TableColumn<User, String> nameCol = new TableColumn<User, String>("Name");
-		nameCol.setMinWidth(144.0D);
-		nameCol.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
-		tableBook.setItems(userList);
+		TableColumn<Book, String> nameCol = new TableColumn<Book, String>("Name");
+		nameCol.setMinWidth(144.0d);
+		nameCol.setCellValueFactory(new PropertyValueFactory<Book, String>("name"));
+		TableColumn<Book, String> authorCol = new TableColumn<Book, String>("Author");
+		authorCol.setMinWidth(144.0d);
+		authorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
+		TableColumn<Book, String> publisherCol = new TableColumn<Book, String>("Publisher");
+		publisherCol.setMinWidth(144.0d);
+		publisherCol.setCellValueFactory(new PropertyValueFactory<Book, String>("publisher"));
+		tableBook.setItems(bookList);
 		tableBook.getColumns().clear();
-		tableBook.getColumns().addAll(usernameCol, nameCol);
+		tableBook.getColumns().addAll(nameCol, authorCol, publisherCol);
 	}
 }

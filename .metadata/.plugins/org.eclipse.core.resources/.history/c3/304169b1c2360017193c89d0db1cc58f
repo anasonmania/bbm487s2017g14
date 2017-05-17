@@ -1,0 +1,472 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+
+
+.root{
+	-fx-background-image: url("/images/bg.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 1366.0 768.0;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30.0, 0.5, 0.0, 0.0);
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url("/font/Roboto-Regular.ttf");
+}
+
+.logo-view{
+	-fx-background-image: url("/images/logo_sq.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center top;
+	-fx-background-repeat: no-repeat;
+}
+
+.logo-view-wide{
+	-fx-background-image: url("/images/logo_wide.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+}
+
+.icon-failed{
+	-fx-background-image: url("/images/icon_failed.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center top;
+	-fx-background-repeat: no-repeat;
+}
+
+.icon-tick{
+	-fx-background-image: url("/images/icon_tick.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center top;
+	-fx-background-repeat: no-repeat;
+}
+
+
+/************************************
+ * 									*
+ * 	Button Styles
+ * 									*
+ ***********************************/
+
+
+.button-grey{
+	-fx-background-color: #727986;
+	-fx-background-radius: 30.0;
+	-fx-text-fill: #ffffff;
+	-fx-pref-width: 480.0;
+	-fx-pref-height: 60.0;
+	-fx-font-size: 18.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+}
+
+
+
+.button-grey:hover{
+	-fx-background-color: #5d636e;
+
+}
+
+.button-green{
+	-fx-background-color: #46b859;
+	-fx-background-radius: 30.0;
+	-fx-text-fill: #ffffff;
+	-fx-pref-width: 480.0;
+	-fx-pref-height: 60.0;
+	-fx-font-size: 18.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
+}
+
+.button-green:hover{
+	-fx-background-color: #3c9e4c;
+
+}
+.toggle-button{
+	-fx-pref-width: 180;
+	-fx-pref-height: 36;
+	-fx-graphic : url("/images/checkbox_off.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+	-fx-opacity: 0.5;
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 0;
+	-fx-border-color: #727986;
+	-fx-border-width: 1;
+	-fx-border-radius: 0;
+	-fx-font-family: Roboto;
+	-fx-font-size: 13.0;
+	-fx-text-fill: #858c99;
+	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
+}
+.toggle-button:selected{
+	-fx-pref-width: 180;
+	-fx-pref-height: 36;
+	-fx-graphic : url("/images/checkbox_on.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+	-fx-opacity: 1.0;
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 0;
+	-fx-border-color: #46b859;
+	-fx-border-width: 1;
+	-fx-border-radius: 0;
+	-fx-font-family: Roboto;
+	-fx-font-size: 13.0;
+	-fx-text-fill: #46b859;
+	-fx-font-weight: BOLD;
+	-fx-font-smoothing-type: gray;
+}
+
+.button-remove-pp{
+	-fx-pref-width: 36;
+	-fx-pref-height: 36;
+	-fx-max-width: 36;
+	-fx-max-height: 36;
+	-fx-background-image: url("/images/icon_delete_w.png");
+	-fx-background-color: #d41923;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-radius: 0;
+	-fx-border-radius: 0;
+}
+
+
+
+.button-back{
+	-fx-pref-width: 144;
+	-fx-pref-height: 48;
+	-fx-background-image: url("/images/icon_back.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+	-fx-opacity: 0.5;
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 24;
+	-fx-border-color: #c1c3c9;
+	-fx-border-width: 2;
+	-fx-border-radius: 24;
+}
+
+.button-back:hover{
+	-fx-pref-width: 144;
+	-fx-pref-height: 48;
+	-fx-opacity: 1.0;
+	-fx-background-image: url("/images/icon_back.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 24;
+	-fx-border-color: #727986;
+	-fx-border-width: 2;
+	-fx-border-radius: 24;
+}
+
+.button-logout{
+	-fx-pref-width: 144;
+	-fx-pref-height: 48;
+	-fx-graphic: url("/images/icon_logout.png");
+	-fx-graphic-text-gap: 12;
+
+	-fx-text-fill: #727986;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 24;
+	-fx-border-color: #c1c3c9;
+	-fx-border-width: 2;
+	-fx-border-radius: 24;
+	-fx-opacity: 0.5;
+}
+
+.button-logout:hover{
+	-fx-pref-width: 144;
+	-fx-pref-height: 48;
+	-fx-graphic: url("/images/icon_logout.png");
+	-fx-graphic-text-gap: 12;
+
+	-fx-text-fill: #727986;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+
+	-fx-background-radius: 24;
+	-fx-border-color: #727986;
+	-fx-border-width: 2;
+	-fx-border-radius: 24;
+	-fx-opacity: 1;
+}
+
+.button-search{
+	-fx-pref-width: 96;
+	-fx-pref-height: 48;
+	-fx-graphic: url("/images/icon_search.png");
+	-fx-graphic-text-gap: 12;
+
+	-fx-text-fill: #727986;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 24;
+	-fx-border-color: #c1c3c9;
+	-fx-border-width: 2;
+	-fx-border-radius: 24;
+	-fx-opacity: 0.5;
+}
+
+.button-search:hover{
+	-fx-pref-width: 96;
+	-fx-pref-height: 48;
+	-fx-graphic: url("/images/icon_search.png");
+	-fx-graphic-text-gap: 12;
+
+	-fx-text-fill: #727986;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+
+	-fx-background-radius: 24;
+	-fx-border-color: #727986;
+	-fx-border-width: 2;
+	-fx-border-radius: 24;
+	-fx-opacity: 1;
+}
+
+
+
+
+
+/************************************
+ * 									*
+ * 	TextField
+ * 									*
+ ***********************************/
+
+.text-field {
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 6.0;
+	-fx-pref-width: 360.0;
+	-fx-pref-height: 32.0;
+	-fx-max-width: 360.0;
+	-fx-max-height: 36.0;
+	-fx-font-size: 12.0;
+	-fx-font-family: Roboto;
+	-fx-highlight-fill: #727986;
+}
+
+.text-area{
+	-fx-background-color: TRANSPARENT;
+	-fx-border-color: #727986;
+	-fx-border-width: 1;
+	-fx-border-radius: 6;
+	-fx-pref-width: 600.0;
+	-fx-pref-height: 120.0;
+	-fx-max-width: 600.0;
+	-fx-max-height: 120.0;
+	-fx-highlight-fill: #727986;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-hbar-policy : never;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+    -fx-hbar-policy : never;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+    -fx-hbar-policy : never;
+}
+
+.text-field-small {
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 6.0;
+	-fx-pref-width: 300.0;
+	-fx-pref-height: 36.0;
+	-fx-max-width: 300.0;
+	-fx-max-height: 36.0;
+	-fx-font-size: 12.0;
+	-fx-font-family: Roboto;
+}
+
+.password-field {
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 6.0;
+	-fx-pref-width: 360.0;
+	-fx-pref-height: 36.0;
+	-fx-max-width: 360.0;
+	-fx-max-height: 36.0;
+	-fx-font-size: 18.0;
+	-fx-font-family: Roboto;
+}
+
+
+.text-field-wide {
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 6.0;
+	-fx-pref-width: 480.0;
+	-fx-pref-height: 36.0;
+	-fx-max-width: 480.0;
+	-fx-max-height: 36.0;
+	-fx-font-size: 18.0;
+	-fx-font-family: Roboto;
+}
+
+.password-field-wide {
+	-fx-background-color: TRANSPARENT;
+	-fx-background-radius: 6.0;
+	-fx-pref-width: 480.0;
+	-fx-pref-height: 36.0;
+	-fx-max-width: 480.0;
+	-fx-max-height: 36.0;
+	-fx-font-size: 18.0;
+	-fx-font-family: Roboto;
+}
+
+
+
+/************************************
+ * 									*
+ * 	Icons
+ * 									*
+ ***********************************/
+
+.icon-create-user{
+	-fx-pref-width: 32.0;
+	-fx-pref-height: 32.0;
+	-fx-max-width: 32.0;
+	-fx-max-height: 32.0;
+	-fx-background-image: url("/images/icon_adduser.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+
+}
+
+.icon-add-customer{
+	-fx-pref-width: 32.0;
+	-fx-pref-height: 32.0;
+	-fx-max-width: 32.0;
+	-fx-max-height: 32.0;
+	-fx-background-image: url("/images/icon_addcustomer_header.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+
+}
+
+.icon-edit-customer{
+	-fx-pref-width: 32.0;
+	-fx-pref-height: 32.0;
+	-fx-max-width: 32.0;
+	-fx-max-height: 32.0;
+	-fx-background-image: url("/images/icon_editcustomer_header.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+
+}
+
+.icon-add-book{
+	-fx-pref-width: 32.0;
+	-fx-pref-height: 32.0;
+	-fx-max-width: 32.0;
+	-fx-max-height: 32.0;
+	-fx-background-image: url("/images/icon_addbook_header.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+
+}
+
+.icon-edit-book{
+	-fx-pref-width: 32.0;
+	-fx-pref-height: 32.0;
+	-fx-max-width: 32.0;
+	-fx-max-height: 32.0;
+	-fx-background-image: url("/images/icon_editbook_header.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+
+}
+
+
+
+/************************************
+ * 									*
+ * 	DatePicker ComboBox
+ * 									*
+ ***********************************/
+
+.date-picker{
+	-fx-background-color: transparent;
+	-fx-max-width: 360;
+	-fx-open-tab-animation: grow ;
+}
+
+.date-picker-popup{
+	-fx-background-color: transparent;
+	-fx-font-size: 18;
+	-fx-animated: true ;
+	-fx-open-tab-animation: grow ;
+}
+
+.date-picker .cell:hover{
+	-fx-background-color: red;
+}
+
+/************************************
+ * 									*
+ * 	Image views
+ * 									*
+ ***********************************/
+.book-image {
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 240.0;
+	-fx-max-width: 180.0;
+	-fx-max-height: 240.0;
+	-fx-background-image: url("/images/icon_image.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-radius: 12.0;
+	-fx-border-color: #c7c9cf;
+	-fx-border-width: 1.0;
+}
+
+.book-image-square {
+	-fx-pref-width: 160.0;
+	-fx-pref-height: 160.0;
+	-fx-max-width: 160.0;
+	-fx-max-height: 160.0;
+	-fx-background-image: url("/images/icon_image.png");
+	-fx-background-color: TRANSPARENT;
+	-fx-background-position: center center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-radius: 12.0;
+	-fx-border-color: #c7c9cf;
+	-fx-border-width: 1.0;
+}
+
+
+
+
+
+

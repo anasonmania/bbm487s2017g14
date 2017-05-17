@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,23 +33,28 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
@@ -72,10 +78,15 @@ public class L2_2EditUser implements Initializable {
 	public DatePicker dpBirthday;
 	public Label lbDeslength;
 	public Pane imageUser;
+	public ImageView ivUser;
+
 	private boolean imageLoaded;
 	private BackgroundImage bgImgUser;
 	private Background bgUser;
 	private Image image;
+
+	public Button remove;
+
 	private File imageFile;
 	public Rectangle rUsername;
 	public Rectangle rPassword;
@@ -106,12 +117,6 @@ public class L2_2EditUser implements Initializable {
 	private FadeTransition hideHeader;
 	private FadeTransition showBottom;
 	private FadeTransition hideBottom;
-	private FadeTransition showSuccessMsg;
-	private FadeTransition hideSuccessMsg;
-	private FadeTransition showSuccessImg;
-	private FadeTransition hideSuccessImg;
-	private FadeTransition showSuccessBtn;
-	private FadeTransition hideSuccessBtn;
 	private FillTransition usernameToRed;
 	private FillTransition usernameToGrey;
 	private FillTransition passwordToRed;
@@ -123,7 +128,7 @@ public class L2_2EditUser implements Initializable {
 	private Duration opacityFactor = Duration.millis(1000.0D);
 	private Pattern pattern;
 	private Matcher matcher;
-	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	int checkDesStart;
 	int remainChar;
 
@@ -137,13 +142,23 @@ public class L2_2EditUser implements Initializable {
 		pfPassword.setText("Password");
 		dpBirthday.setPromptText("Date of birth");
 		if (Main.selectedUser.getProfilePic() != null) {
-			System.out.println("here");
 			BackgroundImage bgImgUser = new BackgroundImage(Main.selectedUser.getProfilePic(),
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
 					BackgroundSize.DEFAULT);
 			Background bgUser = new Background(new BackgroundImage[] { bgImgUser });
-			imageUser.setOpacity(1.0D);
+			ivUser.setImage(Main.selectedUser.getProfilePic());
+
 			imageUser.setBackground(bgUser);
+			remove.setDisable(false);
+		} else {
+			ivUser.setImage(Main.defaultPP);
+			remove.setDisable(true);
+			remove.setOpacity(0);
+		}
+		imageUser.setOpacity(1.0D);
+
+		if (Main.selectedUser.getBirthDate() != null) {
+			dpBirthday.setValue(Main.selectedUser.getBirthDate());
 		}
 
 		failControl = false;
@@ -162,7 +177,8 @@ public class L2_2EditUser implements Initializable {
 		showBottom.play();
 	}
 
-	public void saveUserData(ActionEvent event) throws FileNotFoundException, SQLException {
+	public void saveUserData(ActionEvent event) throws SQLException, NoSuchAlgorithmException, IOException {
+
 		if (!checkInputs()) {
 			HashSet<Integer> ids = new HashSet<Integer>();
 			PreparedStatement idsQuery = Main.con.prepareStatement("SELECT iduserinfo FROM user ");
@@ -175,6 +191,7 @@ public class L2_2EditUser implements Initializable {
 			int schoolnumber;
 			String username;
 			String password;
+			boolean passwordChanged;
 			String email;
 			String name;
 			String surname;
@@ -183,88 +200,163 @@ public class L2_2EditUser implements Initializable {
 			PreparedStatement statement;
 			if (imageLoaded) {
 				FileInputStream insUser = new FileInputStream(imageFile.getPath());
-				statement = Main.con.prepareStatement(
-						"UPDATE user SET username = ?, password = ?, schoolnumber = ?, email = ?, name = ?, surname = ?, birthdate = ?, phonenumber = ?, profilepic = ? WHERE iduserinfo = ? ");
-				username = tfUsername.getText();
-				password = pfPassword.getText();
-				if (!tfSchoolNumber.getText().equals("")) {
-					schoolnumber = Integer.parseInt(tfSchoolNumber.getText());
-					statement.setInt(3, schoolnumber);
-				}
+				if (pfPassword.getText().equals("Password") || pfPassword.getText().equals(""))
+					passwordChanged = false;
+				else
+					passwordChanged = true;
 
-				email = tfEmail.getText();
-				name = tfName.getText();
-				surname = tfSurname.getText();
-				phonenumber = tfPhoneNumber.getText();
-				birthdate = (LocalDate) dpBirthday.getValue();
-				statement.setString(1, username);
-				statement.setString(2, password);
-				statement.setString(4, email);
-				statement.setString(5, name);
-				statement.setString(6, surname);
-				if (birthdate != null) {
-					statement.setDate(8, DBFormatController.dateToDatabase(birthdate));
+				if (passwordChanged) {
+					statement = Main.con.prepareStatement(
+							"UPDATE user SET username = ?, password = ?, schoolnumber = ?, email = ?, name = ?, surname = ?, birthdate = ?, phonenumber = ?, profilepic = ? WHERE iduserinfo = ? ");
+					username = tfUsername.getText();
+
+					if (!tfSchoolNumber.getText().equals("")) {
+						schoolnumber = Integer.parseInt(tfSchoolNumber.getText());
+						statement.setInt(3, schoolnumber);
+					}
+
+					email = tfEmail.getText();
+					name = tfName.getText();
+					surname = tfSurname.getText();
+					phonenumber = tfPhoneNumber.getText();
+					birthdate = (LocalDate) dpBirthday.getValue();
+					password = DBFormatController.passToDatabase(pfPassword.getText());
+					statement.setString(1, username);
+					statement.setString(2, password);
+					statement.setString(4, email);
+					statement.setString(5, name);
+					statement.setString(6, surname);
+					if (birthdate != null) {
+						statement.setDate(7, DBFormatController.dateToDatabase(birthdate));
+					} else {
+						statement.setDate(7, (Date) null);
+					}
+
+					statement.setString(8, phonenumber);
+					statement.setBlob(9, insUser);
+					statement.setInt(10, Main.selectedUser.getUserId());
+					statement.executeUpdate();
 				} else {
-					statement.setDate(8, (Date) null);
+					statement = Main.con.prepareStatement(
+							"UPDATE user SET username = ?, schoolnumber = ?, email = ?, name = ?, surname = ?, birthdate = ?, phonenumber = ?, profilepic = ? WHERE iduserinfo = ? ");
+					username = tfUsername.getText();
+
+					if (!tfSchoolNumber.getText().equals("")) {
+						schoolnumber = Integer.parseInt(tfSchoolNumber.getText());
+						statement.setInt(2, schoolnumber);
+					}
+
+					email = tfEmail.getText();
+					name = tfName.getText();
+					surname = tfSurname.getText();
+					phonenumber = tfPhoneNumber.getText();
+					birthdate = (LocalDate) dpBirthday.getValue();
+					statement.setString(1, username);
+					statement.setString(3, email);
+					statement.setString(4, name);
+					statement.setString(5, surname);
+					if (birthdate != null) {
+						statement.setDate(6, DBFormatController.dateToDatabase(birthdate));
+					} else {
+						statement.setDate(6, (Date) null);
+					}
+
+					statement.setString(7, phonenumber);
+					statement.setBlob(8, insUser);
+					statement.setInt(9, Main.selectedUser.getUserId());
+					statement.executeUpdate();
 				}
 
-				statement.setString(8, phonenumber);
-				statement.setBlob(9, insUser);
-				statement.setInt(10, Main.currentUser.getUserId());
-				statement.executeUpdate();
 			} else {
-				statement = Main.con.prepareStatement(
-						"UPDATE user SET username = ?, password = ?, schoolnumber = ?, email = ?, name = ?, surname = ?, birthdate = ?, phonenumber = ? WHERE iduserinfo = ? ");
-				username = tfUsername.getText();
-				password = pfPassword.getText();
-				if (!tfSchoolNumber.getText().equals("")) {
-					schoolnumber = Integer.parseInt(tfSchoolNumber.getText());
-					statement.setInt(3, schoolnumber);
-				}
 
-				email = tfEmail.getText();
-				name = tfName.getText();
-				surname = tfSurname.getText();
-				phonenumber = tfPhoneNumber.getText();
-				birthdate = (LocalDate) dpBirthday.getValue();
-				statement.setString(1, username);
-				statement.setString(2, password);
-				statement.setString(4, email);
-				statement.setString(5, name);
-				statement.setString(6, surname);
-				if (birthdate != null) {
-					statement.setDate(7, DBFormatController.dateToDatabase(birthdate));
+				if (pfPassword.getText().equals("Password") || pfPassword.getText().equals(""))
+					passwordChanged = false;
+				else
+					passwordChanged = true;
+
+				if (passwordChanged) {
+					statement = Main.con.prepareStatement(
+							"UPDATE user SET username = ?, password = ?, schoolnumber = ?, email = ?, name = ?, surname = ?, birthdate = ?, phonenumber = ? WHERE iduserinfo = ? ");
+					username = tfUsername.getText();
+					password = DBFormatController.passToDatabase(pfPassword.getText());
+					if (!tfSchoolNumber.getText().equals("")) {
+						schoolnumber = Integer.parseInt(tfSchoolNumber.getText());
+						statement.setInt(3, schoolnumber);
+					}
+
+					email = tfEmail.getText();
+					name = tfName.getText();
+					surname = tfSurname.getText();
+					phonenumber = tfPhoneNumber.getText();
+					birthdate = (LocalDate) dpBirthday.getValue();
+					statement.setString(1, username);
+					statement.setString(2, password);
+					statement.setString(4, email);
+					statement.setString(5, name);
+					statement.setString(6, surname);
+					if (birthdate != null) {
+						statement.setDate(7, DBFormatController.dateToDatabase(birthdate));
+					} else {
+						statement.setDate(7, (Date) null);
+					}
+
+					statement.setString(8, phonenumber);
+					statement.setInt(9, Main.selectedUser.getUserId());
+					statement.executeUpdate();
 				} else {
-					statement.setDate(7, (Date) null);
+					statement = Main.con.prepareStatement(
+							"UPDATE user SET username = ?, schoolnumber = ?, email = ?, name = ?, surname = ?, birthdate = ?, phonenumber = ? WHERE iduserinfo = ? ");
+					username = tfUsername.getText();
+					if (!tfSchoolNumber.getText().equals("")) {
+						schoolnumber = Integer.parseInt(tfSchoolNumber.getText());
+						statement.setInt(2, schoolnumber);
+					}
+
+					email = tfEmail.getText();
+					name = tfName.getText();
+					surname = tfSurname.getText();
+					phonenumber = tfPhoneNumber.getText();
+					birthdate = (LocalDate) dpBirthday.getValue();
+					statement.setString(1, username);
+					statement.setString(3, email);
+					statement.setString(4, name);
+					statement.setString(5, surname);
+					if (birthdate != null) {
+						statement.setDate(6, DBFormatController.dateToDatabase(birthdate));
+					} else {
+						statement.setDate(6, (Date) null);
+					}
+
+					statement.setString(7, phonenumber);
+					statement.setInt(8, Main.selectedUser.getUserId());
+					statement.executeUpdate();
 				}
-
-				statement.setString(8, phonenumber);
-				statement.setInt(9, Main.currentUser.getUserId());
-				statement.executeUpdate();
 			}
-		}
 
+			BorderPane borrowPane = (BorderPane) FXMLLoader.load(this.getClass().getResource("../view/DialogSuccess.fxml"));
+			Scene borrowDialog = new Scene(borrowPane, 560, 240);
+			Stage borrowStage = new Stage();
+			borrowStage.setScene(borrowDialog);
+			borrowStage.initStyle(StageStyle.UNDECORATED);
+			borrowStage.initModality(Modality.APPLICATION_MODAL);
+			borrowStage.showAndWait();
+
+		}
 	}
 
 	public void setOpacityAnims() {
-		showHeader = AnimationFabric.createOpacityAnim(paneHeader, 0.0D, 1.0D,
-				opacityFactor.divide(2.0D));
+		showHeader = AnimationFabric.createOpacityAnim(paneHeader, 0.0D, 1.0D, opacityFactor.divide(2.0D));
 		showContent = AnimationFabric.createOpacityAnim(paneContent, 0.0D, 1.0D, opacityFactor);
-		showBottom = AnimationFabric.createOpacityAnim(paneBottom, 0.0D, 1.0D,
-				opacityFactor.multiply(2.0D));
-		hideHeader = AnimationFabric.createOpacityAnim(paneHeader, 1.0D, 0.0D,
-				opacityFactor.multiply(2.0D));
+		showBottom = AnimationFabric.createOpacityAnim(paneBottom, 0.0D, 1.0D, opacityFactor.multiply(2.0D));
+		hideHeader = AnimationFabric.createOpacityAnim(paneHeader, 1.0D, 0.0D, opacityFactor.multiply(2.0D));
 		hideContent = AnimationFabric.createOpacityAnim(paneContent, 1.0D, 0.0D, opacityFactor);
-		hideBottom = AnimationFabric.createOpacityAnim(paneBottom, 1.0D, 0.0D,
-				opacityFactor.divide(2.0D));
+		hideBottom = AnimationFabric.createOpacityAnim(paneBottom, 1.0D, 0.0D, opacityFactor.divide(2.0D));
 		showUsernameWarning = AnimationFabric.createOpacityAnim(warnUsername, 0.0D, 1.0D, opacityFactor);
 		hideUsernameWarning = AnimationFabric.createOpacityAnim(warnUsername, 1.0D, 0.0D, opacityFactor);
 		showPasswordWarning = AnimationFabric.createOpacityAnim(warnPassword, 0.0D, 1.0D, opacityFactor);
 		hidePasswordWarning = AnimationFabric.createOpacityAnim(warnPassword, 1.0D, 0.0D, opacityFactor);
-		showSchoolnumberWarning = AnimationFabric.createOpacityAnim(warnSchoolnumber, 0.0D, 1.0D,
-				opacityFactor);
-		hideSchoolnumberWarning = AnimationFabric.createOpacityAnim(warnSchoolnumber, 1.0D, 0.0D,
-				opacityFactor);
+		showSchoolnumberWarning = AnimationFabric.createOpacityAnim(warnSchoolnumber, 0.0D, 1.0D, opacityFactor);
+		hideSchoolnumberWarning = AnimationFabric.createOpacityAnim(warnSchoolnumber, 1.0D, 0.0D, opacityFactor);
 		showEmailWarning = AnimationFabric.createOpacityAnim(warnEmail, 0.0D, 1.0D, opacityFactor);
 		hideEmailWarning = AnimationFabric.createOpacityAnim(warnEmail, 1.0D, 0.0D, opacityFactor);
 	}
@@ -281,6 +373,8 @@ public class L2_2EditUser implements Initializable {
 		imageFile = fileChooser.showOpenDialog((Window) null);
 		if (imageFile != null) {
 			System.out.println(imageFile.getName());
+			remove.setDisable(false);
+			remove.setOpacity(1);
 		}
 
 		try {
@@ -291,6 +385,7 @@ public class L2_2EditUser implements Initializable {
 					BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
 			bgUser = new Background(new BackgroundImage[] { bgImgUser });
 			imageUser.setBackground(bgUser);
+			ivUser.setImage(image);
 			imageLoaded = true;
 			imageUser.setOpacity(1.0D);
 		} catch (IOException arg3) {
@@ -368,23 +463,23 @@ public class L2_2EditUser implements Initializable {
 		final Scene newScreen = new Scene(newParent);
 		final Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Task<Void> sleeper = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    Thread.sleep((long) opacityFactor.toMillis()/2);
-                } catch (InterruptedException e) {
-                }
-                return null;
-            }
-        };
-        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-            @Override
-            public void handle(WorkerStateEvent event) {
-            	appStage.setScene(newScreen);
-        		appStage.show();
-            }
-        });
-        new Thread(sleeper).start();
+			@Override
+			protected Void call() throws Exception {
+				try {
+					Thread.sleep((long) opacityFactor.toMillis() / 2);
+				} catch (InterruptedException e) {
+				}
+				return null;
+			}
+		};
+		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				appStage.setScene(newScreen);
+				appStage.show();
+			}
+		});
+		new Thread(sleeper).start();
 	}
 
 	public void back(ActionEvent event) throws IOException {
@@ -428,14 +523,28 @@ public class L2_2EditUser implements Initializable {
 				Color.valueOf("#d41923"));
 		passwordToGrey = new FillTransition(Duration.millis(300.0D), rPassword, Color.valueOf("#d41923"),
 				Color.valueOf("#727986"));
-		schoolnumberToRed = new FillTransition(Duration.millis(300.0D), rSchoolnumber,
-				Color.valueOf("#727986"), Color.valueOf("#d41923"));
-		schoolnumberToGrey = new FillTransition(Duration.millis(300.0D), rSchoolnumber,
-				Color.valueOf("#d41923"), Color.valueOf("#727986"));
+		schoolnumberToRed = new FillTransition(Duration.millis(300.0D), rSchoolnumber, Color.valueOf("#727986"),
+				Color.valueOf("#d41923"));
+		schoolnumberToGrey = new FillTransition(Duration.millis(300.0D), rSchoolnumber, Color.valueOf("#d41923"),
+				Color.valueOf("#727986"));
 		emailToRed = new FillTransition(Duration.millis(300.0D), rEmail, Color.valueOf("#727986"),
 				Color.valueOf("#d41923"));
 		emailToGrey = new FillTransition(Duration.millis(300.0D), rEmail, Color.valueOf("#d41923"),
 				Color.valueOf("#727986"));
+	}
+
+	public void removePic(ActionEvent event) throws SQLException {
+
+		ivUser.setImage(Main.defaultPP);
+		remove.setDisable(true);
+		remove.setOpacity(0);
+		imageLoaded = false;
+
+		PreparedStatement statement = Main.con.prepareStatement(
+				"UPDATE user SET profilepic = NULL WHERE iduserinfo = ? ");
+		statement.setInt(1, Main.selectedUser.getUserId());
+		statement.executeUpdate();
+
 	}
 
 	public void rollbackAnims() {

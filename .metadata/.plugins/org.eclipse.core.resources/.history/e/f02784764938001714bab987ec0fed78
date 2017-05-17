@@ -1,0 +1,288 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+
+
+.root{
+
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url("/font/Roboto-Regular.ttf");
+}
+
+.button-grid-1{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12.0;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_giveback.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #727986;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #e5e5e5;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+
+
+}
+
+.button-grid-1:hover{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_giveback_red.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #d41923;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #d41923;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+}
+
+.button-grid-borrow{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12.0;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_borrow.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #727986;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #e5e5e5;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+
+
+}
+
+.button-grid-borrow:hover{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_borrow_red.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #d41923;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #d41923;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+}
+
+.button-grid-giveback{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12.0;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_giveback.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #727986;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #e5e5e5;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+
+
+}
+
+.button-grid-giveback:hover{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_giveback_red.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #d41923;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #d41923;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+}
+
+.button-grid-reservation{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12.0;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_reservation.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #727986;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #e5e5e5;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+
+
+}
+
+.button-grid-reservation:hover{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_reservation_red.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #d41923;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #d41923;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+}
+
+.button-grid-mybooks{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12.0;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_mybooks.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #727986;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #e5e5e5;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+
+
+}
+
+.button-grid-mybooks:hover{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_mybooks_red.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #d41923;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #d41923;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+}
+
+.button-grid-library{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12.0;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_library.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #727986;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #e5e5e5;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+
+
+}
+
+.button-grid-library:hover{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_library_red.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #d41923;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #d41923;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+}
+
+.button-grid-settings{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12.0;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_settings.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #727986;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #e5e5e5;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+
+
+}
+
+.button-grid-settings:hover{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 12;
+	-fx-background-fills: #ffffff;
+	-fx-graphic: url("/images/icon_settings_red.png");
+	-fx-graphic-text-gap: 0;
+	-fx-text-fill: #d41923;
+	-fx-pref-width: 180.0;
+	-fx-pref-height: 180.0;
+	-fx-text-origin: bottom ;
+	-fx-font-size: 16.0;
+	-fx-font-family: Roboto;
+	-fx-font-weight: BOLD;
+	-fx-border-color: #d41923;
+	-fx-border-radius: 12;
+	-fx-border-width: 2;
+}
+
+
+
+
+
+
+
+
+
+

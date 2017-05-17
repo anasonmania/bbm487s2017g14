@@ -1,0 +1,103 @@
+package application.model;
+
+import javafx.scene.image.Image;
+
+public class Book {
+	private String name;
+	private String author;
+	private String publisher;
+	private String description;
+	private int id;
+	private int isbn;
+	private int idOwner;
+	private boolean isAvailable;
+	private Image image;
+
+	public Book(String name, String author, String publisher, String description, int id, int isbn,
+			boolean isAvailable, Image image, int idOwner) {
+		this.name = name;
+		this.author = author;
+		this.publisher = publisher;
+		this.description = description;
+		this.id = id;
+		this.isbn = isbn;
+		this.isAvailable = isAvailable;
+		this.image = image;
+	}
+
+	public int getIdOwner() {
+		return idOwner;
+	}
+
+	public void setIdOwner(int idOwner) {
+		this.idOwner = idOwner;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAuthor() {
+		return this.author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getPublisher() {
+		return this.publisher;
+	}
+
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getid() {
+		return this.id;
+	}
+
+	public void setid(int id) {
+		this.id = id;
+	}
+
+	public int getIsbn() {
+		return this.isbn;
+	}
+
+	public void setIsbn(int isbn) {
+		this.isbn = isbn;
+	}
+
+	public boolean isAvailable() {
+		return this.isAvailable;
+	}
+
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
+	}
+
+	public Image getImage() {
+		return this.image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+}

@@ -41,7 +41,7 @@
       <Pane maxWidth="-Infinity" prefHeight="200.0" prefWidth="253.0" BorderPane.alignment="CENTER" />
    </right>
    <center>
-      <GridPane fx:id="paneCenter" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" vgap="30.0" BorderPane.alignment="TOP_CENTER">
+      <GridPane fx:id="paneCenter" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="610.0" prefWidth="600.0" vgap="30.0" BorderPane.alignment="TOP_CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="720.0" />
         </columnConstraints>
@@ -49,40 +49,65 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <GridPane fx:id="paneContent" vgap="20.0">
+            <GridPane fx:id="paneContent" alignment="CENTER" vgap="10.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="440.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="400.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <GridPane fx:id="paneSearch">
+                  <GridPane fx:id="paneSearch" alignment="CENTER">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="72.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="480.0" />
                         <ColumnConstraints maxWidth="-Infinity" prefWidth="96.0" />
-                        <ColumnConstraints maxWidth="-Infinity" minWidth="10.0" prefWidth="72.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="320.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="80.0" vgrow="ALWAYS" />
                         <RowConstraints />
                         <RowConstraints />
                     </rowConstraints>
                     <children>
-                     <TextField fx:id="tfSearch" onKeyTyped="#lineSearch" prefHeight="34.0" prefWidth="449.0" styleClass="text-field-wide" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
-                  <GridPane fx:id="lnSearch" styleClass="text-line-wide" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-                  <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="47.0" prefWidth="143.0" styleClass="button-search" text="SEARCH" GridPane.columnIndex="2" />
-                  <Rectangle fx:id="rSearch" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" width="480.0" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
+                     <TextField fx:id="tfSearch" onKeyTyped="#lineSearch" prefHeight="34.0" prefWidth="449.0" styleClass="text-field-wide" GridPane.valignment="BOTTOM" />
+                  <GridPane fx:id="lnSearch" styleClass="text-line-wide" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+                  <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="47.0" prefWidth="143.0" styleClass="button-search" text="SEARCH" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
+                  <Rectangle fx:id="rSearch" arcHeight="5.0" arcWidth="5.0" fill="#727986" height="1.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" width="480.0" GridPane.valignment="BOTTOM" />
                     </children>
                   </GridPane>
-                  <TableView fx:id="tableUser" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" GridPane.rowIndex="1">
+                  <TableView fx:id="tableUser" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" GridPane.rowIndex="2">
                     <columns>
                       <TableColumn prefWidth="75.0" text="C1" />
                       <TableColumn prefWidth="75.0" text="C2" />
                     </columns>
                   </TableView>
+                  <Button mnemonicParsing="false" onAction="#toEditUser" styleClass="button-edit" text="EDIT" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Button>
+                  <Rectangle fx:id="rUserimg" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="120.0" stroke="TRANSPARENT" strokeType="INSIDE" width="120.0" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+                  <Label fx:id="lbName" styleClass="text-a1b" text="Label" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="140.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lbSchoolnum" layoutX="340.0" layoutY="135.0" styleClass="text-a1" text="Label" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="140.0" top="32.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lbEmail" layoutX="150.0" layoutY="107.0" styleClass="text-a2" text="Label" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="140.0" top="54.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lbRole" layoutX="150.0" layoutY="129.0" styleClass="text-a2b" text="Label" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="140.0" top="96.0" />
+                     </GridPane.margin>
+                  </Label>
                </children>
                <GridPane.margin>
                   <Insets right="20.0" />
@@ -106,12 +131,10 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#toEditUser" styleClass="button-green" text="Edit Selected" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Label styleClass="text-xsmall" text="© Group 14 , 2017" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Label styleClass="text-xsmall" text="© Group 14 , 2017" GridPane.halignment="CENTER">
                <GridPane.margin>
                   <Insets bottom="10.0" />
                </GridPane.margin>
